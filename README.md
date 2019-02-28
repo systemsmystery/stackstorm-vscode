@@ -10,7 +10,7 @@ This extension adds the ability to create the required files for a Stackstorm pa
 Right click within the explorer to create:
 
 * Pack Config File - `pack.yaml` file required for a pack.
-* Config Schema Template = `config.schema.yaml` file required if using config values within a pack. 
+* Config Schema Template - `config.schema.yaml` file required if using config values within a pack. 
 
 ![Overview](images/overview.gif)
 
@@ -20,8 +20,8 @@ This extension should not overwrite any files that already exist, however this i
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+Detailed change log can be found [here](CHANGELOG.md).
 
-### 1.0.0
+### 0.0.1
 
 Initial release of Stackstorm VSCode
