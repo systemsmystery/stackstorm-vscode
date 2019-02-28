@@ -12,7 +12,7 @@ Right click within the explorer to create:
 * Pack Config File - `pack.yaml` file required for a pack.
 * Config Schema Template = `config.schema.yaml` file required if using config values within a pack. 
 
-\!\[feature X\]\(images/overview.gif\)
+![Overview](images/overview.gif)
 
 ## Note
 
