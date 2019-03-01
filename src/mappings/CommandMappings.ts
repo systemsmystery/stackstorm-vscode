@@ -5,7 +5,9 @@ import { genFunction } from '../enums/functions';
 
 export const StandardCommandMappings = new Map<Command, IntTemplate>([
     //[Command.ReadMe, {filename: 'README.md', templateFile: TemplateFile.ReadMe}]
-    [Command.ConfigSchema, {filename: 'config.schema.yaml', templateFile: TemplateFile.configSchema}]
+    [Command.ConfigSchema, {filename: 'config.schema.yaml', templateFile: TemplateFile.configSchema}],
+    [Command.ActionMetadata, {filename: 'action.yaml', templateFile: TemplateFile.ActionMetadata}],
+    [Command.WorkflowMetadata, {filename: 'workflow.yaml', templateFile: TemplateFile.WorkflowMetadata}]
 ]);
 
 export const generateFileCommandMappings = new Map<Command, GenTemplate>([

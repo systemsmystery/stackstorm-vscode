@@ -20,7 +20,9 @@
 	"activationEvents": [
 		"onCommand:st2.gen_packFile",
 		"onCommand:st2.gen_configSchema",
-		"onCommand:st2.gen_readMe"
+		"onCommand:st2.gen_readMe",
+		"onCommand:st2.gen_actionMetadata",
+		"onCommand:st2.gen_workflowMetadata"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -36,6 +38,14 @@
 			{
 				"command": "st2.gen_readMe",
 				"title": "Generate Pack README"
+			},
+			{
+				"command": "st2.gen_actionMetadata",
+				"title": "ST2: Generate Action MetadataFile"
+			},
+			{
+				"command": "st2.gen_workflowMetadata",
+				"title": "ST2: Generate Workflow Metadata File"
 			}
 		],
 		"menus": {
@@ -51,6 +61,14 @@
 				{
 					"command": "st2.gen_readMe",
 					"group": "st2@3"
+				},
+				{
+					"command": "st2.gen_actionMetadata",
+					"group": "st2@4"
+				},
+				{
+					"command": "st2.gen_workflowMetadata",
+					"group": "st2@5"
 				}
 			]
 		}

@@ -1,5 +1,4 @@
 import { TemplateFile } from '../enums/template';
-import { genFunction } from '../enums/functions';
 
 export interface IntTemplate {
     filename: string;
