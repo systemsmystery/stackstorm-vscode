@@ -21,7 +21,3 @@ This extension should not overwrite any files that already exist, however this i
 ## Release Notes
 
 Detailed change log can be found [here](CHANGELOG.md).
-
-### 0.0.1
-
-Initial release of Stackstorm VSCode

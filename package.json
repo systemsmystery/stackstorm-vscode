@@ -6,7 +6,7 @@
 	"author": {
 		"name": "Richard Annand"
 	},
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.31.0"
 	},
@@ -19,7 +19,8 @@
 	],
 	"activationEvents": [
 		"onCommand:st2.gen_packFile",
-		"onCommand:st2.gen_configSchema"
+		"onCommand:st2.gen_configSchema",
+		"onCommand:st2.gen_readMe"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -31,6 +32,10 @@
 			{
 				"command": "st2.gen_configSchema",
 				"title": "Generate Config Schema"
+			},
+			{
+				"command": "st2.gen_readMe",
+				"title": "Generate Pack README"
 			}
 		],
 		"menus": {
@@ -42,6 +47,10 @@
 				{
 					"command": "st2.gen_configSchema",
 					"group": "st2@2"
+				},
+				{
+					"command": "st2.gen_readMe",
+					"group": "st2@3"
 				}
 			]
 		}
