@@ -23,7 +23,8 @@
 		"onCommand:st2.gen_readMe",
 		"onCommand:st2.gen_actionMetadata",
 		"onCommand:st2.gen_workflowMetadata",
-		"onCommand:st2.gen_ruleConfig"
+		"onCommand:st2.gen_ruleConfig",
+		"onCommand:st2.gen_policyMetadata"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -51,6 +52,10 @@
 			{
 				"command": "st2.gen_ruleConfig",
 				"title": "ST2: Generate Rule Config File"
+			},
+			{
+				"command": "st2.gen_policyMetadata",
+				"title": "ST2: Generate Policy Metadata File"
 			}
 		],
 		"menus": {
@@ -77,6 +82,10 @@
 				},
 				{
 					"command": "st2.gen_ruleConfig",
+					"group": "st2@1"
+				},
+				{
+					"command": "st2.gen_policyMetadata",
 					"group": "st2@1"
 				}
 			]
