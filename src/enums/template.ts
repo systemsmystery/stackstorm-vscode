@@ -5,6 +5,7 @@ export enum TemplateFile {
     ActionMetadata = 'action.yaml.tmpl',
     WorkflowMetadata = 'workflow.yaml.tmpl',
     RuleConfig = 'rule.yaml.tmpl',
+    AliasMetadata = 'alias.yaml.tmpl',
     SensorMetadata = 'sensor.yaml.tmpl',
     PolicyMetadata = 'policy.yaml.tmpl'
 }

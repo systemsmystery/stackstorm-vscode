@@ -5,6 +5,7 @@ export enum Command {
     ActionMetadata = 'st2.gen_actionMetadata',
     WorkflowMetadata = 'st2.gen_workflowMetadata',
     RuleConfig = 'st2.gen_ruleConfig',
+    AliasMetadata = 'st2.gen_aliasMetadata',
     SensorMetadata = 'st2.gen_sensorMetadata',
-    PolicyMetadata = 'st2.gen_policyMetadata'
+    PolicyMetadata = 'st2.gen_policyMetadata',
 }
