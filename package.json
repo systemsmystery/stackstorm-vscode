@@ -29,19 +29,19 @@
 		"commands": [
 			{
 				"command": "st2.gen_packFile",
-				"title": "Generate Pack Config File"
+				"title": "ST2: Generate Pack Config File"
 			},
 			{
 				"command": "st2.gen_configSchema",
-				"title": "Generate Config Schema"
+				"title": "ST2: Generate Config Schema"
 			},
 			{
 				"command": "st2.gen_readMe",
-				"title": "Generate Pack README"
+				"title": "ST2: Generate Pack README"
 			},
 			{
 				"command": "st2.gen_actionMetadata",
-				"title": "ST2: Generate Action MetadataFile"
+				"title": "ST2: Generate Action Metadata File"
 			},
 			{
 				"command": "st2.gen_workflowMetadata",
