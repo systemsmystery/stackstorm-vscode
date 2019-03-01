@@ -1,17 +1,20 @@
 language: node_js
 node_js:
- - node
- - lts/*
+- node
+- lts/*
 cache:
   timeout: 1800
   yarn: true
   directories:
-    - node_modules
+  - node_modules
 env:
-  - CXX=g++-4.8
+- CXX=g++-4.8
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+    - g++-4.8
+notifications:
+  slack:
+    secure: XBqSyWAUc4t7rHMNrhXovkdB5tWz5Isu+08djCl7c7uzeSE/jNnwfbS8zap+6FLVK93JzfZssFZrFkfqGMWqBFEK7re8rC7ps0JW+AqGMlb/MNYc8wA4XFqFLhvviLrd8wz9UJASYhY+YF/eKO0ZYQZT4cPUCK7wVOQzhiBBcdE/gLt8u9aLqvsQcPIIeXy2MCABECdRLBUfP9Wn4qUDRKxx2I62Zw2bjzt6OxhGDh2Pdq/yzmrY+Joun62sAOpO0oh8emHR4TSIky0HGlvjiCLg2mday7cCDOZz1R9YeVRSy5RNCwDyZcV55wMRd+lbnQylo5GrFtcdV/6vej2j0W46xS+I4hwHCjlgAj4cBZ2IlErwqqxqV/+lVvSS2GeJK27R1ikGQTVWPtODJsfWnUGsCnCNaQcZ553PEo5iOzvUfsmW2bLisXzVWB5IfmhU18jUEsgRLpwEggcXP9o85/0P5pH9BdyaOYK17+q/ZOP2PZCs929SiXlkSTPlhfBspsegVAg+qnSgM6TxLKm08RkB0TJ5aTD+Bg+6z4FhNSJvbPmOU8gWnbiTZ/ghm0q8U5pYSJnV7BPFZFEIXWxSmd+iN2RsAOQmpQ/N5dhTSjOPYOaSttGKQQXUSvWFZE7n/PwBkbZ0ceHYj8iOjHQ4jcQ5q2FTJFuBgEhrSSRPy8U=
