@@ -8,7 +8,8 @@ export const StandardCommandMappings = new Map<Command, IntTemplate>([
     [Command.ConfigSchema, {filename: 'config.schema.yaml', templateFile: TemplateFile.configSchema}],
     [Command.ActionMetadata, {filename: 'action.yaml', templateFile: TemplateFile.ActionMetadata}],
     [Command.WorkflowMetadata, {filename: 'workflow.yaml', templateFile: TemplateFile.WorkflowMetadata}],
-    [Command.RuleConfig, {filename: 'rule.yaml', templateFile: TemplateFile.RuleConfig}]
+    [Command.RuleConfig, {filename: 'rule.yaml', templateFile: TemplateFile.RuleConfig}],
+    [Command.AliasMetadata, {filename: 'alias.yaml', templateFile: TemplateFile.AliasMetadata}]
 ]);
 
 export const generateFileCommandMappings = new Map<Command, GenTemplate>([
