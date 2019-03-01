@@ -22,7 +22,8 @@
 		"onCommand:st2.gen_configSchema",
 		"onCommand:st2.gen_readMe",
 		"onCommand:st2.gen_actionMetadata",
-		"onCommand:st2.gen_workflowMetadata"
+		"onCommand:st2.gen_workflowMetadata",
+		"onCommand:st2.gen_ruleConfig"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -46,6 +47,10 @@
 			{
 				"command": "st2.gen_workflowMetadata",
 				"title": "ST2: Generate Workflow Metadata File"
+			},
+			{
+				"command": "st2.gen_ruleConfig",
+				"title": "ST2: Generate Rule Config File"
 			}
 		],
 		"menus": {
@@ -56,19 +61,23 @@
 				},
 				{
 					"command": "st2.gen_configSchema",
-					"group": "st2@2"
+					"group": "st2@1"
 				},
 				{
 					"command": "st2.gen_readMe",
-					"group": "st2@3"
+					"group": "st2@1"
 				},
 				{
 					"command": "st2.gen_actionMetadata",
-					"group": "st2@4"
+					"group": "st2@1"
 				},
 				{
 					"command": "st2.gen_workflowMetadata",
-					"group": "st2@5"
+					"group": "st2@1"
+				},
+				{
+					"command": "st2.gen_ruleConfig",
+					"group": "st2@1"
 				}
 			]
 		}
