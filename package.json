@@ -24,7 +24,9 @@
 		"onCommand:st2.gen_actionMetadata",
 		"onCommand:st2.gen_workflowMetadata",
 		"onCommand:st2.gen_ruleConfig",
-		"onCommand:st2.gen_aliasMetadata"
+		"onCommand:st2.gen_aliasMetadata",
+		"onCommand:st2.gen_sensorMetadata",
+		"onCommand:st2.gen_policyMetadata"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -56,6 +58,14 @@
 			{
 				"command": "st2.gen_aliasMetadata",
 				"title": "ST2: Generate Action Alias Metadata File"
+			},
+			{
+				"command": "st2.gen_sensorMetadata",
+				"title": "ST2: Generate Sensor Metadata File"
+			},
+			{
+				"command": "st2.gen_policyMetadata",
+				"title": "ST2: Generate Policy Metadata File"
 			}
 		],
 		"menus": {
@@ -86,6 +96,14 @@
 				},
 				{
 					"command": "st2.gen_aliasMetadata",
+					"group": "st2@1"
+				},
+				{
+					"command": "st2.gen_sensorMetadata",
+					"group": "st2@1"
+				},
+				{
+					"command": "st2.gen_policyMetadata",
 					"group": "st2@1"
 				}
 			]
