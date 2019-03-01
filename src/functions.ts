@@ -50,3 +50,25 @@ export async function writeReadMe(templateFile: TemplateFile, destination: strin
         writeFile(join(destination, filename), completedTemplate, filename);
     }
 }
+
+export async function writePackConfig(templateFile: TemplateFile, destination: string, filename: string){
+    const templateContent = getTemplate(templateFile);
+    let ref = await vscode.window.showInputBox({prompt: 'Enter Pack reference.', placeHolder: 'my-first-stackstorm-pack'});
+    let name = await vscode.window.showInputBox({prompt: 'Enter Pack Name', placeHolder: 'Stackstorm Integration Pack'});
+    let author = await vscode.window.showInputBox({prompt: 'Enter Author Name', placeHolder: 'John Doe'});
+    let email = await vscode.window.showInputBox({prompt: 'Enter Author Email', placeHolder: 'john@example.com'});
+    if (!ref || !name || !author || !email){
+        vscode.window.showErrorMessage('Please fill in all information');
+    } else {
+        const mapping = {
+            ref: ref,
+            name: name,
+            author: author,
+            email: email
+        };
+        lodash.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
+        const template = lodash.template(templateContent);
+        const completedTemplate = template(mapping);
+        writeFile(join(destination, filename), completedTemplate, filename);
+    }
+}
