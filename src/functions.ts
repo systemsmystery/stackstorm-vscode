@@ -35,9 +35,8 @@ export function writeStandardTemplate(templateFile: TemplateFile, destination: s
 }
 
 export async function writeReadMe(templateFile: TemplateFile, destination: string, filename: string){
-    console.log('render template');
     const templateContent = getTemplate(templateFile);
-    let packname = await vscode.window.showInputBox({prompt: 'Enter Pack Name (This will be the header of the README', placeHolder: 'Stackstorm Integration Pack'});
+    let packname = await vscode.window.showInputBox({prompt: 'Enter Pack Name (This will be the header of the README)', placeHolder: 'Stackstorm Integration Pack'});
     if (!packname){
         vscode.window.showErrorMessage('Please enter a pack name');
     } else {
