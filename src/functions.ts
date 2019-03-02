@@ -1,17 +1,17 @@
-import { join } from 'path';
-import { writeFileSync, readFileSync } from 'fs';
-import * as vscode from 'vscode';
-import * as lodash from 'lodash';
-import { TemplateFile } from './enums/template';
+import { join } from 'path'
+import { writeFileSync, readFileSync } from 'fs'
+import * as vscode from 'vscode'
+import * as lodash from 'lodash'
+import { TemplateFile } from './enums/template'
 
-export function writeFile(destinationFile: string, fileContent: string, fileName: string){
-    try{
-        writeFileSync(destinationFile, fileContent, { flag: 'wx+' });
-        vscode.window.showInformationMessage(`Created file ${fileName}!`);
-    } catch(err) {
-        vscode.window.showErrorMessage(`Cannot create file, file with name ${fileName} may already exist.`);
-        console.log(err);
-    }
+export function writeFile (destinationFile: string, fileContent: string, fileName: string) {
+  try {
+      writeFileSync(destinationFile, fileContent, { flag: 'wx+' });
+      vscode.window.showInformationMessage(`Created file ${fileName}!`);
+  } catch(err) {
+      vscode.window.showErrorMessage(`Cannot create file, file with name ${fileName} may already exist.`);
+      console.log(err);
+  }
 }
 
 export function getTemplate(templateFile: TemplateFile){
@@ -54,8 +54,13 @@ export async function writePackConfig(templateFile: TemplateFile, destination: s
     const templateContent = getTemplate(templateFile);
     let ref = await vscode.window.showInputBox({prompt: 'Enter Pack reference.', placeHolder: 'my-first-stackstorm-pack'});
     let name = await vscode.window.showInputBox({prompt: 'Enter Pack Name', placeHolder: 'Stackstorm Integration Pack'});
-    let author = await vscode.window.showInputBox({prompt: 'Enter Author Name', placeHolder: 'John Doe'});
-    let email = await vscode.window.showInputBox({prompt: 'Enter Author Email', placeHolder: 'john@example.com'});
+    console.log(vscode.workspace.getConfiguration().get('st2.defaultAuthor'));
+    const author = (vscode.workspace.getConfiguration().get('st2.defaultAuthor'))?
+        vscode.workspace.getConfiguration().get('st2.defaultAuthor') :
+        await vscode.window.showInputBox({prompt: 'Enter Author Name', placeHolder: 'John Doe'});
+    const email = (vscode.workspace.getConfiguration().get('st2.defaultemail'))?
+        vscode.workspace.getConfiguration().get('st2.defaultemail') :
+        await vscode.window.showInputBox({prompt: 'Enter Author Name', placeHolder: 'John Doe'});
     if (!ref || !name || !author || !email){
         vscode.window.showErrorMessage('Please fill in all information');
     } else {
