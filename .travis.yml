@@ -15,6 +15,13 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
+
+install:
+  - npm install
+  - npm run vscode:prepublish
+
+script:
+  - npm test --silent
 notifications:
   slack:
     rooms:
