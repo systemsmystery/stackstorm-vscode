@@ -3,11 +3,11 @@
 ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/systemsmystery.stackstorm-vscode.svg?style=flat-square)
 ![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/systemsmystery.stackstorm-vscode.svg?style=flat-square)
 ![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/systemsmystery.stackstorm-vscode.svg?style=flat-square)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/92ac812f24fe4dffb8b78ae6f41387fa)](https://app.codacy.com/app/rj175/stackstorm-vscode?utm_source=github.com&utm_medium=referral&utm_content=systemsmystery/stackstorm-vscode&utm_campaign=Badge_Grade_Settings)
 [![Travis CI](https://img.shields.io/travis/systemsmystery/stackstorm-vscode.svg?style=flat-square)](https://travis-ci.org/user/repository)
 [![GitHub](https://img.shields.io/github/issues/systemsmystery/stackstorm-vscode.svg?style=flat-square)](https://github.com/systemsmystery/stackstorm-vscode/issues)
 [![GitHub](https://img.shields.io/github/release/systemsmystery/stackstorm-vscode.svg?style=flat-square)](https://github.com/systemsmystery/stackstorm-vscode/releases)
 [![BuyMeACoffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-brightgreen.svg?style=flat-square)](https://www.buymeacoffee.com/systemsmystery)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/92ac812f24fe4dffb8b78ae6f41387fa)](https://app.codacy.com/app/rj175/stackstorm-vscode?utm_source=github.com&utm_medium=referral&utm_content=systemsmystery/stackstorm-vscode&utm_campaign=Badge_Grade_Settings)
 
 This extension adds the ability to create the required files for a Stackstorm pack in a VS Code Workspace.
  > Inspired by VS Code Angular Files (https://github.com/ivalexa/vscode-angular2-files/)
