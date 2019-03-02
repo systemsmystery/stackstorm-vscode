@@ -38,6 +38,22 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Stackstorm Pack Configuration",
+			"properties": {
+				"st2.defaultAuthor": {
+					"type": "string",
+					"default": null,
+					"description": "Default pack author to use in pack configuration file."
+				},
+				"st2.defaultEmail": {
+					"type": "string",
+					"default": null,
+					"description": "Default pack email to use in pack configuration file."
+				}
+			}
+		},
 		"commands": [
 			{
 				"command": "st2.gen_packFile",
@@ -134,6 +150,7 @@
 		"mocha": "^6.0.2",
 		"ts-node": "^8.0.2",
 		"tslint": "^5.12.1",
+		"tslint-config-standard": "^8.0.1",
 		"typescript": "^3.3.3333",
 		"vsce": "^1.57.1",
 		"vscode": "^1.1.28",
