@@ -1,20 +1,22 @@
 import * as assert from 'assert';
 import { getTemplate, writeReadMe } from '../functions';
-import { TemplateFile } from '../enums/template';
+import { StandardCommandMappings } from '../mappings/CommandMappings';
 import { fstat } from 'fs';
 import * as fs from 'fs';
 import * as vscode from 'vscode';
 import {join} from 'path';
+import { Command } from '../enums/command';
 
-suite("Extension Tests", function () {
+suite("Content of Templates Match", function () {
 
-    test("Read Me File", function () {
-        const testfile = join(__dirname, '../../templateFiles/README.md.tmpl');
+    for (const [key, value] of StandardCommandMappings) {
+        const templateFile = value.templateFile;
+    test(`Get content of ${templateFile}`, function () {
+        const testfile = join(__dirname, '../../templateFiles/', templateFile);
         const content = fs.readFileSync(testfile, 'utf-8');
-        assert.strictEqual(content, getTemplate(TemplateFile.ReadMe));
+        assert.strictEqual(content, getTemplate(value.templateFile));
     });
-
-});
+}});
 
 // describe('Get content of template', () => {
 //     it('should return the content of the README template', () => {
