@@ -6,14 +6,7 @@ import { TemplateFile } from './enums/template'
 import { getTemplate, getInput, getSettingOrInput } from './handlerFunctions'
 
 export function writeFileContent (destinationFile: string, fileContent: string, fileName: string) {
-  // try {
   writeFileSync(destinationFile, fileContent, { flag: 'wx+' })
-
-    // vscode.window.showInformationMessage(`Created file ${fileName}!`)
-  // } catch (err) {
-    // vscode.window.showErrorMessage(`Cannot create file, file with name ${fileName} may already exist.`)
-    // console.log(err)
-  // }
 }
 
 export function writeStandardTemplate (templateFile: TemplateFile, destination: string, filename: string) {
@@ -51,7 +44,6 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
 
 export async function writePackConfig (templateFile: TemplateFile, destination: string, filename: string): Promise<boolean> {
   const templateContent = getTemplate(templateFile)
-  console.log(templateContent)
   if (!templateContent) {
     vscode.window.showErrorMessage('Cannot get content of template')
   }
