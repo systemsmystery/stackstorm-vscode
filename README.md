@@ -11,7 +11,10 @@
 
 This extension adds the ability to create the required files for a Stackstorm pack in a VS Code Workspace.
  > Inspired by [VS Code Angular Files](https://github.com/ivalexa/vscode-angular2-files/)
- > This plugin has no association with Stackstorm.org
+
+## Disclaimer
+
+This plugin is not an official Stackstorm plugin. It is not officially affiliated with Stackstorm.
 
 ## Features
 
@@ -29,6 +32,14 @@ Right click within the explorer to create:
 *   README Template - `README.md` file to describe the pack.
 *   Rule Metadata Template - `rule.yaml` used to create rules within stackstorm.
 *   Sensor Metadata Template - `senson.yaml` file used to create stackstorm sensors.
+
+## Settings
+
+Two settings can be set for use with this extension, they are:
+*  `st2.defaultAuthor`. This setting is used to fill in the author section of the pack.yaml file. If this is not set, you will be prompted for an answer.
+*  `st2.defaultEmail`. This setting is used to fill in the email section of the pack.yaml file. If this is not set, you will be prompted for an answer.
+
+These settings can either be set via the settings page or via the settings.json file.
 
 ## Demo
 ![Overview](images/overview.gif)

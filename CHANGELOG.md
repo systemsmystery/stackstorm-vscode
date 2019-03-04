@@ -1,6 +1,17 @@
 # Change Log
 All notable changes to the "stackstorm-vscode" extension will be documented in this file.
 
+##\[1.1.0] - 2019-03-04
+### Added
+*  Added 'st2.defaultAuthor' setting which can be used to fill out the pack.yaml file.
+*  Added 'st2.defaultEmail' setting which can be used to fill out the pack.yaml file.
+*  Stackstorm logo.
+
+### Fixed
+*  Fixed issues with promises in the code.
+*  Complied to TsLint rules.
+*  Change github link in package.json file.
+
 ## \[1.0.0] - 2019-03-01
 ### Added
 #### General

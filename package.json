@@ -6,13 +6,13 @@
 	"author": {
 		"name": "Richard Annand"
 	},
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"engines": {
 		"vscode": "^1.31.0"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/rj175/stackstorm-vscode"
+		"url": "https://github.com/systemsmystery/stackstorm-vscode"
 	},
 	"bugs": {
 		"url": "https://github.com/systemsmystery/stackstorm-vscode/issues"
@@ -25,6 +25,8 @@
 	"categories": [
 		"Other"
 	],
+	"license": "SEE LICENSE IN LICENSE",
+	"icon": "./images/icon.jpg",
 	"activationEvents": [
 		"onCommand:st2.gen_packFile",
 		"onCommand:st2.gen_configSchema",
