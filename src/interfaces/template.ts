@@ -1,6 +1,6 @@
-import { TemplateFile } from '../enums/template';
+import { TemplateFile } from '../enums/template'
 
 export interface IntTemplate {
-    filename: string;
-    templateFile: TemplateFile;
+  filename: string
+  templateFile: TemplateFile
 }

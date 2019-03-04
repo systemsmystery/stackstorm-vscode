@@ -157,6 +157,8 @@
 		"vscode-linter": "^0.2.2"
 	},
 	"dependencies": {
-		"@types/lodash": "^4.14.121"
+		"@types/classnames": "^2.2.7",
+		"@types/lodash": "^4.14.121",
+		"classnames": "^2.2.6"
 	}
 }

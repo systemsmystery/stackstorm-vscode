@@ -38,7 +38,7 @@
 	  "variable-declaration": "onespace"
 	}
   ],
-  "await-promise": true,
+  "await-promise": false,
   "curly": [true, "ignore-same-line"],
   "deprecation": true,
   "label-position": true,
@@ -46,7 +46,7 @@
   "no-conditional-assignment": true,
   "no-duplicate-imports": true,
   "no-duplicate-variable": true,
-  "no-empty": true,
+  "no-empty": false,
   "no-eval": true,
   "no-reference-import": true,
   "no-return-await": true,
