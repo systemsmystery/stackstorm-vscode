@@ -26,7 +26,7 @@
 		"Other"
 	],
 	"license": "SEE LICENSE IN LICENSE",
-	"icon": "./images/icon.jpg",
+	"icon": "images/logo.jpg",
 	"activationEvents": [
 		"onCommand:st2.gen_packFile",
 		"onCommand:st2.gen_configSchema",
