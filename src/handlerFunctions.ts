@@ -3,10 +3,10 @@ import { readFileSync } from 'fs'
 import { TemplateFile } from './enums/template'
 import { join } from 'path'
 
-export async function getSettingOrInput (prompt: string, placeholder: string, setting: string) {
+export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string) {
   let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
   if (PACK_CONFIG.get<string>(setting) === undefined) {
-    let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder })
+    let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue})
     return value
   }
   if (PACK_CONFIG.get<string>(setting) !== undefined) {
@@ -15,8 +15,8 @@ export async function getSettingOrInput (prompt: string, placeholder: string, se
   }
 }
 
-export async function getInput (prompt: string, placeholder: string) {
-  let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder })
+export async function getInput (prompt: string, placeholder: string, defaultValue: string) {
+  let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
   return value
 }
 
