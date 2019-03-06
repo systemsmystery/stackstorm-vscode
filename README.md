@@ -29,6 +29,8 @@ This plugin is not an official Stackstorm plugin. It is not officially affiliate
 
 ### File Templates
 
+Use the bootstrap folder command to create the structure for a Stackstorm pack in your current workspace. Or...
+
 Right click within the explorer to create:
 
 *   Pack Config Template - `pack.yaml` file required for a pack.

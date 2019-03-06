@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to the "stackstorm-vscode" extension will be documented in this file.
 
+## \[1.2.0]
+### Added
+*  Added ST2: Bootstrap Folder to create a pack layout from scratch
+
 ## \[1.1.1] - 2019-03-06
 ### Fixed
 *  #18 - Fixed the generating of templates. This was tested however on a fresh install this did not work.
