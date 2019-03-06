@@ -1,7 +1,11 @@
 # Change Log
 All notable changes to the "stackstorm-vscode" extension will be documented in this file.
 
-##\[1.1.0] - 2019-03-04
+## \[1.1.1] - 2019-03-06
+### Fixed
+*  #18 - Fixed the generating of templates. This was tested however on a fresh install this did not work.
+
+## \[1.1.0] - 2019-03-04
 ### Added
 *  Added 'st2.defaultAuthor' setting which can be used to fill out the pack.yaml file.
 *  Added 'st2.defaultEmail' setting which can be used to fill out the pack.yaml file.
