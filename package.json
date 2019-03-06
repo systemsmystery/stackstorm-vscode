@@ -6,7 +6,7 @@
 	"author": {
 		"name": "Richard Annand"
 	},
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"engines": {
 		"vscode": "^1.31.0"
 	},
@@ -28,15 +28,7 @@
 	"license": "SEE LICENSE IN LICENSE",
 	"icon": "images/logo.jpg",
 	"activationEvents": [
-		"onCommand:st2.gen_packFile",
-		"onCommand:st2.gen_configSchema",
-		"onCommand:st2.gen_readMe",
-		"onCommand:st2.gen_actionMetadata",
-		"onCommand:st2.gen_workflowMetadata",
-		"onCommand:st2.gen_ruleConfig",
-		"onCommand:st2.gen_aliasMetadata",
-		"onCommand:st2.gen_sensorMetadata",
-		"onCommand:st2.gen_policyMetadata"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -92,6 +84,10 @@
 			{
 				"command": "st2.gen_policyMetadata",
 				"title": "ST2: Generate Policy Metadata File"
+			},
+			{
+				"command": "st2.bootstrap_folder",
+				"title": "ST2: Bootstrap Folder"
 			}
 		],
 		"menus": {
