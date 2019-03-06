@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to the "stackstorm-vscode" extension will be documented in this file.
 
-## \[1.2.0]
+## \[1.2.0] - 2019-03-06
 ### Added
 *   Added Bootstrap Folder to create a pack layout from scratch
 
