@@ -3,7 +3,7 @@ All notable changes to the "stackstorm-vscode" extension will be documented in t
 
 ## \[1.2.0]
 ### Added
-*  Added ST2: Bootstrap Folder to create a pack layout from scratch
+*  Added Bootstrap Folder to create a pack layout from scratch
 
 ## \[1.1.1] - 2019-03-06
 ### Fixed

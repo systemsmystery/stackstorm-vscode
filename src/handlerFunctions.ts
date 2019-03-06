@@ -6,7 +6,7 @@ import { join } from 'path'
 export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string) {
   let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
   if (PACK_CONFIG.get<string>(setting) === undefined) {
-    let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue})
+    let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
     return value
   }
   if (PACK_CONFIG.get<string>(setting) !== undefined) {
