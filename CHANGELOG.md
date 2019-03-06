@@ -3,22 +3,22 @@ All notable changes to the "stackstorm-vscode" extension will be documented in t
 
 ## \[1.2.0]
 ### Added
-*  Added Bootstrap Folder to create a pack layout from scratch
+*   Added Bootstrap Folder to create a pack layout from scratch
 
 ## \[1.1.1] - 2019-03-06
 ### Fixed
-*  #18 - Fixed the generating of templates. This was tested however on a fresh install this did not work.
+*   #18 - Fixed the generating of templates. This was tested however on a fresh install this did not work.
 
 ## \[1.1.0] - 2019-03-04
 ### Added
-*  Added 'st2.defaultAuthor' setting which can be used to fill out the pack.yaml file.
-*  Added 'st2.defaultEmail' setting which can be used to fill out the pack.yaml file.
-*  Stackstorm logo.
+*   Added 'st2.defaultAuthor' setting which can be used to fill out the pack.yaml file.
+*   Added 'st2.defaultEmail' setting which can be used to fill out the pack.yaml file.
+*   Stackstorm logo.
 
 ### Fixed
-*  Fixed issues with promises in the code.
-*  Complied to TsLint rules.
-*  Change github link in package.json file.
+*   Fixed issues with promises in the code.
+*   Complied to TsLint rules.
+*   Change github link in package.json file.
 
 ## \[1.0.0] - 2019-03-01
 ### Added
