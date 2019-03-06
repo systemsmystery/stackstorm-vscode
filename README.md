@@ -1,5 +1,13 @@
 # Stackstorm VS Code
 
+# Important notice
+It has become apparent that although in my testing the extension was working normally, when installed on a fresh install it did not.
+This has now been fixed. I apologise for this and hope that you will try this extension again.
+
+If you experence anymore issues please raise them at https://github.com/systemsmystery/stackstorm-vscode/issues
+
+---
+
 ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/systemsmystery.stackstorm-vscode.svg?style=flat-square)
 ![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/systemsmystery.stackstorm-vscode.svg?style=flat-square)
 ![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/systemsmystery.stackstorm-vscode.svg?style=flat-square)
@@ -8,6 +16,7 @@
 [![GitHub](https://img.shields.io/github/release/systemsmystery/stackstorm-vscode.svg?style=flat-square)](https://github.com/systemsmystery/stackstorm-vscode/releases)
 [![BuyMeACoffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-brightgreen.svg?style=flat-square)](https://www.buymeacoffee.com/systemsmystery)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/92ac812f24fe4dffb8b78ae6f41387fa)](https://app.codacy.com/app/rj175/stackstorm-vscode?utm_source=github.com&utm_medium=referral&utm_content=systemsmystery/stackstorm-vscode&utm_campaign=Badge_Grade_Settings)
+
 
 This extension adds the ability to create the required files for a Stackstorm pack in a VS Code Workspace.
  > Inspired by [VS Code Angular Files](https://github.com/ivalexa/vscode-angular2-files/)
