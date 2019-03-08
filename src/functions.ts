@@ -6,12 +6,16 @@ import { TemplateFile } from './enums/template'
 import { TlFolder, SubFolder } from './enums/folders'
 import { getTemplate, getInput, getSettingOrInput } from './handlerFunctions'
 import { SubFolderMappings, BootstrapFiles } from './mappings/SubFolderMappings'
+import { getOutputChannel, LogToConsole } from './logging'
+
+getOutputChannel().show(true)
 
 export function writeFileContent (destinationFile: string, fileContent: string, fileName: string) {
   writeFileSync(destinationFile, fileContent, { flag: 'wx+' })
 }
 
 export function writeStandardTemplate (templateFile: TemplateFile, destination: string, filename: string) {
+  LogToConsole(`Creating ${filename} file`)
   const TEMPLATE_FOLDER = 'templateFiles'
   let templatePath = join(__dirname, TEMPLATE_FOLDER, templateFile)
   let content = readFileSync(templatePath, 'utf-8')
@@ -19,16 +23,20 @@ export function writeStandardTemplate (templateFile: TemplateFile, destination: 
   try {
     writeFileSync(destinationFile, content, { flag: 'wx+' })
     vscode.window.showInformationMessage(`Created file ${filename}!`)
-  } catch {
-    vscode.window.showErrorMessage(`Cannot create file, file with name ${filename} may already exist.`)
+    LogToConsole(`Created file ${filename}`)
+  } catch (e) {
+    vscode.window.showErrorMessage(`An error occoured, see console output.`)
+    LogToConsole(e)
   }
 }
 
 export async function writeReadMe (templateFile: TemplateFile, destination: string, filename: string) {
+  LogToConsole('Creating ReadMe file')
   const templateContent = getTemplate(templateFile)
   let packname = await vscode.window.showInputBox({ prompt: 'Enter Pack Name (This will be the header of the README)', placeHolder: 'Stackstorm Integration Pack', value: 'My First Pack' })
   if (!packname) {
     vscode.window.showErrorMessage('Please enter a pack name')
+    LogToConsole('No pack name given')
   } else {
     const mapping = {
       name: packname
@@ -38,16 +46,20 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
     const completedTemplate = template(mapping)
     try {
       writeFileContent(join(destination, filename), completedTemplate, filename)
-    } catch {
-      vscode.window.showErrorMessage('Could not write file')
+      LogToConsole(`Created file ${filename}`)
+    } catch (e) {
+      vscode.window.showErrorMessage('Could not write file, check console output for error', 'Got it')
+      LogToConsole(e)
     }
   }
 }
 
 export async function writePackConfig (templateFile: TemplateFile, destination: string, filename: string): Promise<boolean> {
+  LogToConsole('Writing pack config file')
   const templateContent = getTemplate(templateFile)
   if (!templateContent) {
     vscode.window.showErrorMessage('Cannot get content of template')
+    LogToConsole('Cannot get contents of template file')
   }
   let ref = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
   let packname = await getInput('Pack Name', 'Pack Name', 'My First Pack')
@@ -55,6 +67,11 @@ export async function writePackConfig (templateFile: TemplateFile, destination: 
   let email = await getSettingOrInput('Author Email', 'Author Email', 'defaultEmail', 'john@example.com')
   if (!ref || !packname || !author || !email) {
     vscode.window.showErrorMessage('Please fill in all information required', 'Got it')
+    LogToConsole('Not all information provided. Got the following:')
+    LogToConsole(`ref: ${ref}`)
+    LogToConsole(`packname: ${packname}`)
+    LogToConsole(`author: ${author}`)
+    LogToConsole(`email: ${email}`)
     throw new Error('Not all information provided')
   }
   const mappings = {
@@ -68,8 +85,11 @@ export async function writePackConfig (templateFile: TemplateFile, destination: 
   const completedTemplate = template(mappings)
   try {
     writeFileContent(join(destination, filename), completedTemplate, filename)
+    LogToConsole(`Wrong config file to ${filename}`)
     return true
   } catch (e) {
+    vscode.window.showErrorMessage('Could not create file, check output console for more details', 'Got it')
+    LogToConsole(e)
     return false
   }
 }
