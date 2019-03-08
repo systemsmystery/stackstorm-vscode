@@ -54,15 +54,26 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
   }
 }
 
-export async function writePackConfig (templateFile: TemplateFile, destination: string, filename: string): Promise<boolean> {
+export async function writePackConfig (templateFile: TemplateFile, destination: string, filename: string) {
   LogToConsole('Writing pack config file')
   const templateContent = getTemplate(templateFile)
   if (!templateContent) {
     vscode.window.showErrorMessage('Cannot get content of template')
     LogToConsole('Cannot get contents of template file')
   }
-  let ref = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
-  let packname = await getInput('Pack Name', 'Pack Name', 'My First Pack')
+  let validChars = '^[0-9a-zA-Z-]+$'
+  let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
+  if (ref === undefined) {
+    vscode.window.showErrorMessage('No string given', 'Got it')
+    throw new Error('Undefined ref')
+  } else if (!ref.match(validChars)) {
+    vscode.window.showErrorMessage('Pack name can only contain letters, numbers and dashes', 'Got it')
+    throw new Error('Pack name can only contain letters, numbers and dashes. Pack will not be created correctly.')
+  }
+  let packname = ref.replace(/-/g, ' ').toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(' ')
   let author = await getSettingOrInput('Pack Author', 'Pack Author', 'defaultAuthor', 'John Doe')
   let email = await getSettingOrInput('Author Email', 'Author Email', 'defaultEmail', 'john@example.com')
   if (!ref || !packname || !author || !email) {

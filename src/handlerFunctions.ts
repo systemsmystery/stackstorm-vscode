@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { readFileSync } from 'fs'
 import { TemplateFile } from './enums/template'
-import { join } from 'path'
+import { join, resolve } from 'path'
 import { LogToConsole } from './logging'
 
 export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string) {
@@ -17,9 +17,13 @@ export async function getSettingOrInput (prompt: string, placeholder: string, se
   }
 }
 
-export async function getInput (prompt: string, placeholder: string, defaultValue: string) {
+export async function getInput (prompt: string, placeholder: string, defaultValue: string): Promise<string | undefined> {
   let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
-  return value
+  if (value as string) {
+    return value
+  } else {
+    return undefined
+  }
 }
 
 export function getTemplate (templateFile: TemplateFile) {
