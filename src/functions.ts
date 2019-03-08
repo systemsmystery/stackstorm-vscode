@@ -1,18 +1,11 @@
 import { join } from 'path'
-import { writeFileSync, readFileSync, writeFile, fstat, mkdirSync } from 'fs'
+import { readFileSync, lstatSync } from 'fs'
 import * as vscode from 'vscode'
-import * as lodash from 'lodash'
 import { TemplateFile } from './enums/template'
-import { TlFolder, SubFolder } from './enums/folders'
-import { getTemplate, getInput, getSettingOrInput } from './handlerFunctions'
-import { SubFolderMappings, BootstrapFiles } from './mappings/SubFolderMappings'
+import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
 import { getOutputChannel, LogToConsole } from './logging'
 
 getOutputChannel().show(true)
-
-export function writeFileContent (destinationFile: string, fileContent: string, fileName: string) {
-  writeFileSync(destinationFile, fileContent, { flag: 'wx+' })
-}
 
 export function writeStandardTemplate (templateFile: TemplateFile, destination: string, filename: string) {
   LogToConsole(`Creating ${filename} file`)
@@ -20,19 +13,13 @@ export function writeStandardTemplate (templateFile: TemplateFile, destination: 
   let templatePath = join(__dirname, TEMPLATE_FOLDER, templateFile)
   let content = readFileSync(templatePath, 'utf-8')
   let destinationFile = join(destination, filename)
-  try {
-    writeFileSync(destinationFile, content, { flag: 'wx+' })
-    vscode.window.showInformationMessage(`Created file ${filename}!`)
-    LogToConsole(`Created file ${filename}`)
-  } catch (e) {
-    vscode.window.showErrorMessage(`An error occoured, see console output.`)
-    LogToConsole(e)
-  }
+  writeFileContent(destinationFile, content, filename, false)
 }
 
 export async function writeReadMe (templateFile: TemplateFile, destination: string, filename: string) {
+  LogToConsole('Checking if file already exists')
+  LogToConsole(join(destination, filename))
   LogToConsole('Creating ReadMe file')
-  const templateContent = getTemplate(templateFile)
   let packname = await vscode.window.showInputBox({ prompt: 'Enter Pack Name (This will be the header of the README)', placeHolder: 'Stackstorm Integration Pack', value: 'My First Pack' })
   if (!packname) {
     vscode.window.showErrorMessage('Please enter a pack name')
@@ -41,26 +28,13 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
     const mapping = {
       name: packname
     }
-    lodash.templateSettings.interpolate = /{{([\s\S]+?)}}/g
-    const template = lodash.template(templateContent)
-    const completedTemplate = template(mapping)
-    try {
-      writeFileContent(join(destination, filename), completedTemplate, filename)
-      LogToConsole(`Created file ${filename}`)
-    } catch (e) {
-      vscode.window.showErrorMessage('Could not write file, check console output for error', 'Got it')
-      LogToConsole(e)
-    }
+    let content = generateTemplate(templateFile, mapping)
+    writeFileContent(join(destination, filename), content, filename, true)
   }
 }
 
 export async function writePackConfig (templateFile: TemplateFile, destination: string, filename: string) {
   LogToConsole('Writing pack config file')
-  const templateContent = getTemplate(templateFile)
-  if (!templateContent) {
-    vscode.window.showErrorMessage('Cannot get content of template')
-    LogToConsole('Cannot get contents of template file')
-  }
   let validChars = '^[0-9a-zA-Z-]+$'
   let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
   if (ref === undefined) {
@@ -91,16 +65,7 @@ export async function writePackConfig (templateFile: TemplateFile, destination: 
     'author': author,
     'email': email
   }
-  lodash.templateSettings.interpolate = /{{([\s\S]+?)}}/g
-  const template = lodash.template(templateContent)
-  const completedTemplate = template(mappings)
-  try {
-    writeFileContent(join(destination, filename), completedTemplate, filename)
-    LogToConsole(`Wrote config file to ${filename}`)
-    return true
-  } catch (e) {
-    vscode.window.showErrorMessage('Could not create file, check output console for more details', 'Got it')
-    LogToConsole(e)
-    return false
-  }
+  let content = generateTemplate(TemplateFile.packFile, mappings)
+  writeFileContent(join(destination, filename), content, filename, false)
+
 }
