@@ -2,14 +2,18 @@ import * as vscode from 'vscode'
 import { readFileSync } from 'fs'
 import { TemplateFile } from './enums/template'
 import { join } from 'path'
+import { LogToConsole } from './logging'
 
 export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string) {
   let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
-  if (PACK_CONFIG.get<string>(setting) === undefined) {
+  LogToConsole(`Looking for config setting: ${setting}`)
+  LogToConsole(`Content of setting: ${PACK_CONFIG.get<string>(setting)}`)
+  if (PACK_CONFIG.get(setting) === undefined || null) {
+    LogToConsole('Cannot find setting')
     let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
     return value
-  }
-  if (PACK_CONFIG.get<string>(setting) !== undefined) {
+  } else {
+    LogToConsole('Returning value of setting')
     let value = PACK_CONFIG.get(setting)
     return value
   }
