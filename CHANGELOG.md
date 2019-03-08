@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to the "stackstorm-vscode" extension will be documented in this file.
 
+## \[1.3.0] - 2019-03-08
+### Added
+*   Added a output channel to display logging information if errors occur.
+
+### Fixed
+*   Fixed issue with pack not generating a pack.yaml file if the author and email setting were not set. Issue number #23
+
 ## \[1.2.0] - 2019-03-06
 ### Added
 *   Added Bootstrap Folder to create a pack layout from scratch
