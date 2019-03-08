@@ -5,6 +5,7 @@ import { TemplateFile } from './enums/template'
 import { writePackConfig, writeReadMe } from './functions'
 import { join } from 'path'
 import { mkdirSync, readFileSync, writeFileSync } from 'fs'
+import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
 
 export async function bootstrapFolders () {
   const projectRoot = vscode.workspace.workspaceFolders
@@ -14,7 +15,6 @@ export async function bootstrapFolders () {
       const folder = join(projectRoot[0].uri.fsPath, value)
       try {
         mkdirSync(folder)
-        console.log(folder)
       } catch (error) {
         throw new Error(error)
       }
@@ -46,13 +46,34 @@ export async function bootstrapFolders () {
     } catch (e) {
       console.log(e)
     }
+    let validChars = '^[0-9a-zA-Z-]+$'
+    let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
+    if (ref === undefined) {
+      vscode.window.showErrorMessage('No string given', 'Got it')
+      throw new Error('Undefined ref')
+    } else if (!ref.match(validChars)) {
+      vscode.window.showErrorMessage('Pack name can only contain letters, numbers and dashes', 'Got it')
+      throw new Error('Pack name can only contain letters, numbers and dashes. Pack will not be created correctly.')
+    }
+    let packname = ref.replace(/-/g, ' ').toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(' ')
+    let author = await getSettingOrInput('Pack Author', 'Pack Author', 'defaultAuthor', 'John Doe')
+    let email = await getSettingOrInput('Author Email', 'Author Email', 'defaultEmail', 'john@example.com')
     // Write Pack Config File
-    await writePackConfig(TemplateFile.packFile, projectRoot[0].uri.fsPath, 'pack.yaml').catch(error => {
-      vscode.window.showErrorMessage(error)
-    })
-    // Write README.md file
-    await writeReadMe(TemplateFile.ReadMe, projectRoot[0].uri.fsPath, 'README.md').catch(error => {
-      vscode.window.showErrorMessage(error)
-    })
+    const PackMappings = {
+      'ref': ref,
+      'name': packname,
+      'author': author,
+      'email': email
+    }
+    let PackFileContent = generateTemplate(TemplateFile.packFile, PackMappings)
+    writeFileContent(join(projectRoot[0].uri.fsPath, 'pack.yaml'), PackFileContent, 'pack.yaml', true)
+    const ReadMeMappings = {
+      name: packname
+    }
+    let ReadMeContent = generateTemplate(TemplateFile.ReadMe, ReadMeMappings)
+    writeFileContent(join(projectRoot[0].uri.fsPath, 'README.md'), ReadMeContent, 'README.md', true)
   }
 }

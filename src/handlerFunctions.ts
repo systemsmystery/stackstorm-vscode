@@ -1,8 +1,22 @@
 import * as vscode from 'vscode'
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync, lstat, truncate } from 'fs'
 import { TemplateFile } from './enums/template'
-import { join, resolve } from 'path'
+import { join } from 'path'
 import { LogToConsole } from './logging'
+import * as lodash from 'lodash'
+
+export function writeFileContent (destinationFile: string, fileContent: string, fileName: string, showInfoMessages: boolean) {
+  try {
+    writeFileSync(destinationFile, fileContent, { flag: 'wx+' })
+    if (showInfoMessages === true) {
+      vscode.window.showInformationMessage(`Created file ${fileName}`)
+      LogToConsole(`Created file ${fileName}`)
+    }
+  } catch (err) {
+    vscode.window.showErrorMessage(`An error occoured, see console output.`)
+    LogToConsole(err)
+  }
+}
 
 export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string) {
   let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
@@ -26,9 +40,11 @@ export async function getInput (prompt: string, placeholder: string, defaultValu
   }
 }
 
-export function getTemplate (templateFile: TemplateFile) {
+export function generateTemplate (templateFile: TemplateFile, mappings: object) {
   const TEMPLATE_FOLDER = 'templateFiles'
   const templatePath = join(__dirname, TEMPLATE_FOLDER, templateFile)
-  const content = readFileSync(templatePath, 'utf-8')
-  return readFileSync(templatePath, 'utf-8')
+  lodash.templateSettings.interpolate = /{{([\s\S]+?)}}/g
+  const template = lodash.template(readFileSync(templatePath, 'utf-8'))
+  const content = template(mappings)
+  return content
 }
