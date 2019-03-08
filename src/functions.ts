@@ -85,7 +85,7 @@ export async function writePackConfig (templateFile: TemplateFile, destination: 
   const completedTemplate = template(mappings)
   try {
     writeFileContent(join(destination, filename), completedTemplate, filename)
-    LogToConsole(`Wrong config file to ${filename}`)
+    LogToConsole(`Wrote config file to ${filename}`)
     return true
   } catch (e) {
     vscode.window.showErrorMessage('Could not create file, check output console for more details', 'Got it')

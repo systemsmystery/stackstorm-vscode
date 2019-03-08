@@ -11,7 +11,7 @@ export function getOutputChannel (): vscode.OutputChannel {
   return _outputChannel
 }
 
-export function LogToConsole (logMessage: string) {
+export function LogToConsole (logMessage: string | undefined | boolean) {
   let now = new Date()
   let date = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate()
   let time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds()
