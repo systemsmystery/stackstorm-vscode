@@ -38,14 +38,14 @@ describe('Write Standard Templates to File', function () {
 }
 )
 
-describe('Write README file', function () {
-  it('Write README', function () {
-    const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
-    writeReadMe(TemplateFile.ReadMe, __dirname, 'README.md').catch(error => {
-      vscode.window.showErrorMessage(error)
-    })
-    let result = existsSync(join(__dirname, 'README.md'))
+// describe('Write README file', function () {
+//   it('Write README', function () {
+//     const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
+//     writeReadMe(TemplateFile.ReadMe, __dirname, 'README.md').catch(error => {
+//       vscode.window.showErrorMessage(error)
+//     })
+//     let result = existsSync(join(__dirname, 'README.md'))
 
-    assert.strictEqual(true, result)
-  })
-})
+//     assert.strictEqual(true, result)
+//   })
+// })
