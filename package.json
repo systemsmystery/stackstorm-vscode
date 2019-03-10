@@ -30,7 +30,7 @@
 	"activationEvents": [
 		"*"
 	],
-	"main": "./out/extension.js",
+	"main": "./out/src/extension",
 	"contributes": {
 		"configuration": {
 			"type": "object",
@@ -137,15 +137,38 @@
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && vscode-linter && node ./node_modules/vscode/bin/test"
+		"test": "npm run compile && node ./node_modules/vscode/bin/test",
+		"test:coveralls": "node cat ./coverage/lcov.info | coveralls",
+		"cover": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+		"coveralls-windows": "node proxy.js ./coverage/lcov.info"
 	},
+	"nyc": {
+		"reporter": ["lcov"],
+		"temp-directory": "./coverage/.nyc_output",
+		"all": true,
+		"exclude": "typings",
+		"extension": [".ts"],
+		"sourceMap": true,
+		"instrument": true,
+		"include": ["src/**/*.ts", "test/**/*.ts"]
+	  },
 	"devDependencies": {
 		"@types/chai": "^4.1.7",
+		"@types/glob": "^7.1.1",
 		"@types/mocha": "^2.2.48",
 		"@types/node": "^10.12.21",
+		"@types/sinon": "^7.0.9",
 		"chai": "^4.2.0",
 		"copyfiles": "^2.1.0",
+		"coveralls": "^3.0.3",
+		"decache": "^4.5.1",
+		"glob": "^7.1.3",
+		"istanbul": "^0.4.5",
 		"mocha": "^6.0.2",
+		"mocha-lcov-reporter": "^1.3.0",
+		"nyc": "^13.3.0",
+		"remap-istanbul": "^0.13.0",
+		"sinon": "^7.2.7",
 		"ts-node": "^8.0.2",
 		"tslint": "^5.12.1",
 		"tslint-config-standard": "^8.0.1",
@@ -156,8 +179,10 @@
 	},
 	"dependencies": {
 		"@types/classnames": "^2.2.7",
+		"@types/fs-extra": "^5.0.5",
 		"@types/lodash": "^4.14.121",
 		"classnames": "^2.2.6",
+		"fs-extra": "^7.0.1",
 		"lodash": "^4.17.11"
 	}
 }

@@ -1,0 +1,1 @@
+require('fs').createReadStream(process.argv[1]).pipe('./node_modules/coveralls/bin/coveralls.js')

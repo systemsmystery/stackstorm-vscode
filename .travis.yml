@@ -35,6 +35,9 @@ install:
 
 script:
   - npm test --silent
+
+after_success:
+  - cat coverage/lcov.info | coveralls
 notifications:
   slack:
     rooms:

@@ -1,0 +1,9 @@
+{
+    "include": [
+        "src/**/*.ts"
+    ],
+    "extension": [
+        ".ts"
+    ],
+    "report-dir": "./coverage"
+}
