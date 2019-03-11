@@ -43,17 +43,26 @@ describe('Write Standard Templates to File', function () {
 )
 
 describe('Write README file', function () {
-  it('Write README', function () {
+  let SCRATCH_DIR = join(__dirname, 'template_test_results')
+  before('Create a folder to save test files', function () {
+    mkdirSync(SCRATCH_DIR)
+  })
+  before('Create README file', function () {
     const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
-    writeReadMe(TemplateFile.ReadMe, __dirname, 'README.md').catch(error => {
+    writeReadMe(TemplateFile.ReadMe, SCRATCH_DIR, 'README.md').catch(error => {
       vscode.window.showErrorMessage(error)
     })
+  })
+  it('Write README', function () {
     let COMPARE_PATH = join(__dirname, 'resources', 'README.md')
-    let RESULT_PATH = join(__dirname, 'README.md')
+    let RESULT_PATH = join(SCRATCH_DIR, 'README.md')
 
     let result = readFileSync(RESULT_PATH, 'utf-8')
     let compare = readFileSync(COMPARE_PATH, 'utf-8')
 
     assert.strictEqual(compare, result)
+  })
+  after('Remove file', function () {
+    removeSync(SCRATCH_DIR)
   })
 })
