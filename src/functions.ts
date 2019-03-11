@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { readFileSync, lstatSync } from 'fs'
+import { readFileSync, lstatSync, existsSync, writeFile, writeFileSync } from 'fs'
 import * as vscode from 'vscode'
 import { TemplateFile } from './enums/template'
 import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
@@ -13,7 +13,15 @@ export function writeStandardTemplate (templateFile: TemplateFile, destination: 
   let templatePath = join(__dirname, TEMPLATE_FOLDER, templateFile)
   let content = readFileSync(templatePath, 'utf-8')
   let destinationFile = join(destination, filename)
-  writeFileContent(destinationFile, content, filename, false)
+  // writeFileContent(destinationFile, content, filename, false)
+  writeFileSync(destinationFile, content, { flag: 'wx+' })
+  // (err) => {
+  //   if (err) throw err
+  //   // if (showInfoMessages === true) {
+  //   vscode.window.showInformationMessage(`Created file ${filename}`)
+  //   LogToConsole(`Created file ${filename}`)
+  //   // }
+  // })
 }
 
 export async function writeReadMe (templateFile: TemplateFile, destination: string, filename: string) {
@@ -29,7 +37,21 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
       name: packname
     }
     let content = generateTemplate(templateFile, mapping)
-    writeFileContent(join(destination, filename), content, filename, true)
+    // writeFileContent(join(destination, filename), content, filename, true)
+    writeFileSync(join(destination, filename), content, { flag: 'wx+' })
+    // (err) => {
+    //   if (err) throw err
+    //   // if (showInfoMessages === true) {
+    //   vscode.window.showInformationMessage(`Created file ${filename}`)
+    //   LogToConsole(`Created file ${filename}`)
+    //   // }
+    // })
+    // if (existsSync(join(destination, filename)) === true) {
+  //     LogToConsole('README file has been created')
+  //   } else {
+  //     LogToConsole('README file has not been created')
+  //   }
+  // }
   }
 }
 

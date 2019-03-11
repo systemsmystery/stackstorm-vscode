@@ -132,7 +132,7 @@
 		}
 	},
 	"scripts": {
-		"moveTemplate": "copyfiles templateFiles/**/*.tmpl ./out/src",
+		"moveTemplate": "copyfiles templateFiles/**/*.tmpl ./out/src && copyfiles test/resources/**/* ./out",
 		"vscode:prepublish": "npm run moveTemplate && npm run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",

@@ -1,21 +1,18 @@
 import * as vscode from 'vscode'
-import { readFileSync, writeFileSync, lstat, truncate } from 'fs'
+import { readFileSync, writeFileSync, lstat, truncate, writeFile } from 'fs'
 import { TemplateFile } from './enums/template'
 import { join } from 'path'
 import { LogToConsole } from './logging'
 import * as lodash from 'lodash'
 
 export function writeFileContent (destinationFile: string, fileContent: string, fileName: string, showInfoMessages: boolean) {
-  try {
-    writeFileSync(destinationFile, fileContent, { flag: 'wx+' })
+  writeFile(destinationFile, fileContent, { flag: 'wx+' }, (err) => {
+    if (err) throw err
     if (showInfoMessages === true) {
       vscode.window.showInformationMessage(`Created file ${fileName}`)
       LogToConsole(`Created file ${fileName}`)
     }
-  } catch (err) {
-    vscode.window.showErrorMessage(`An error occoured, see console output.`)
-    LogToConsole(err)
-  }
+  })
 }
 
 export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string) {

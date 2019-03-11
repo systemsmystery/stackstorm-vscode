@@ -7,6 +7,10 @@ import * as assert from 'assert'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 
+function sleep (ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 describe('Check template files match', function () {
   let TEMPLATE_DIRECTORY = join(__dirname, '../../templateFiles/')
   let OUT_TEMPLATE_FILES = join(__dirname, '../src/templateFiles/')
@@ -38,14 +42,18 @@ describe('Write Standard Templates to File', function () {
 }
 )
 
-// describe('Write README file', function () {
-//   it('Write README', function () {
-//     const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
-//     writeReadMe(TemplateFile.ReadMe, __dirname, 'README.md').catch(error => {
-//       vscode.window.showErrorMessage(error)
-//     })
-//     let result = existsSync(join(__dirname, 'README.md'))
+describe('Write README file', function () {
+  it('Write README', function () {
+    const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
+    writeReadMe(TemplateFile.ReadMe, __dirname, 'README.md').catch(error => {
+      vscode.window.showErrorMessage(error)
+    })
+    let COMPARE_PATH = join(__dirname, 'resources', 'README.md')
+    let RESULT_PATH = join(__dirname, 'README.md')
 
-//     assert.strictEqual(true, result)
-//   })
-// })
+    let result = readFileSync(RESULT_PATH, 'utf-8')
+    let compare = readFileSync(COMPARE_PATH, 'utf-8')
+
+    assert.strictEqual(compare, result)
+  })
+})
