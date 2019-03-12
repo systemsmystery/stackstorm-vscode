@@ -37,14 +37,12 @@ describe('Write Standard Templates to File', function () {
 )
 
 describe('Write README file', function () {
-  // before('Create a folder to save test files', function () {
-  // })
   before('Create README file', function () {
-    const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
+    let inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
     writeReadMe(TemplateFile.ReadMe, SCRATCH_DIR, 'README.md-testwrite').catch(error => {
       vscode.window.showErrorMessage(error)
     })
-    inputStub.reset()
+    inputStub.restore()
   })
   it('Write README', function () {
     let COMPARE_PATH = join(__dirname, 'resources', 'README.md')
@@ -55,11 +53,6 @@ describe('Write README file', function () {
 
     assert.strictEqual(compare, result)
   })
-  // let errorWindowSpy = sinon.spy(vscode.window, 'showErrorMessage')
-  // before('Setup for no response', function () {
-  //   let fakeinput = sinon.fake.returns(undefined)
-  //   sinon.replace(vscode.window, 'showInputBox', fakeinput)
-  // })
   it('Provide no answer for README', function () {
     const spy = sinon.spy(vscode.window, 'showErrorMessage')
     writeReadMe(TemplateFile.ReadMe, SCRATCH_DIR, 'README.md').catch(error => {
