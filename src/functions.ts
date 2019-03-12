@@ -28,30 +28,24 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
   LogToConsole('Checking if file already exists')
   LogToConsole(join(destination, filename))
   LogToConsole('Creating ReadMe file')
-  let packname = await vscode.window.showInputBox({ prompt: 'Enter Pack Name (This will be the header of the README)', placeHolder: 'Stackstorm Integration Pack', value: 'My First Pack' })
-  if (!packname) {
-    vscode.window.showErrorMessage('Please enter a pack name')
-    LogToConsole('No pack name given')
+  let packname = await vscode.window.showInputBox({ prompt: 'Enter Pack Name (This will be the header of the README)',
+    placeHolder: 'Stackstorm Integration Pack',
+    validateInput: (result: string) => {
+      if (!result) {
+        return 'Valid pack name required'
+      }
+      return null
+    }
+  })
+  if (packname === undefined) {
+    // vscode.window.showErrorMessage('No pack name supplied')
+    throw new Error('No pack name supplied')
   } else {
     const mapping = {
       name: packname
     }
     let content = generateTemplate(templateFile, mapping)
-    // writeFileContent(join(destination, filename), content, filename, true)
     writeFileSync(join(destination, filename), content, { flag: 'wx+' })
-    // (err) => {
-    //   if (err) throw err
-    //   // if (showInfoMessages === true) {
-    //   vscode.window.showInformationMessage(`Created file ${filename}`)
-    //   LogToConsole(`Created file ${filename}`)
-    //   // }
-    // })
-    // if (existsSync(join(destination, filename)) === true) {
-  //     LogToConsole('README file has been created')
-  //   } else {
-  //     LogToConsole('README file has not been created')
-  //   }
-  // }
   }
 }
 

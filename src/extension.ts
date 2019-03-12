@@ -15,7 +15,8 @@ export function activate (context: vscode.ExtensionContext) {
 
   const writeReadMeCommand = vscode.commands.registerCommand(Command.ReadMe, (uri: vscode.Uri) => {
     writeReadMe(TemplateFile.ReadMe, uri.fsPath, 'README.md').catch(error => {
-      vscode.window.showErrorMessage(error)
+      vscode.window.showErrorMessage('There was an error')
+      console.log(error)
     })
   })
   context.subscriptions.push(writeReadMeCommand)

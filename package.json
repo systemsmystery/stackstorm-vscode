@@ -143,15 +143,22 @@
 		"coveralls-windows": "node proxy.js ./coverage/lcov.info"
 	},
 	"nyc": {
-		"reporter": ["lcov"],
+		"reporter": [
+			"lcov"
+		],
 		"temp-directory": "./coverage/.nyc_output",
 		"all": true,
 		"exclude": "typings",
-		"extension": [".ts"],
+		"extension": [
+			".ts"
+		],
 		"sourceMap": true,
 		"instrument": true,
-		"include": ["src/**/*.ts", "test/**/*.ts"]
-	  },
+		"include": [
+			"src/**/*.ts",
+			"test/**/*.ts"
+		]
+	},
 	"devDependencies": {
 		"@types/chai": "^4.1.7",
 		"@types/glob": "^7.1.1",
@@ -169,6 +176,7 @@
 		"nyc": "^13.3.0",
 		"remap-istanbul": "^0.13.0",
 		"sinon": "^7.2.7",
+		"sinon-chai": "^3.3.0",
 		"ts-node": "^8.0.2",
 		"tslint": "^5.12.1",
 		"tslint-config-standard": "^8.0.1",
