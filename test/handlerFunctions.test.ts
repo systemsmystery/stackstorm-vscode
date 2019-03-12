@@ -7,13 +7,13 @@ describe('Test getInput handler function', function () {
   it('Test that response matches value', async function () {
     const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves('My test module')
     let result: string | undefined = await getInput('Test prompt', 'Test placeholder', 'Test default value')
-    console.log(result)
     assert.strictEqual(result, 'My test module')
     inputStub.restore()
   })
   it('Test that response matches undefined', async function () {
+    const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves()
     let result: string | undefined = await getInput('Test prompt', 'Test placeholder', 'Test default value')
-    console.log(result)
     assert.strictEqual(result, undefined)
+    inputStub.restore()
   })
 })
