@@ -29,6 +29,7 @@
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionTestsPath=${workspaceFolder}/out/test"
 			],
+			"cwd": "testing-space",
 			"outFiles": [
 				"${workspaceFolder}/out/test/**/*.js"
 			],

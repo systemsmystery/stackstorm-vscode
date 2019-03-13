@@ -15,7 +15,6 @@ before('Create scratch directory', function () {
 describe('Check template files match', function () {
   let TEMPLATE_DIRECTORY = join(__dirname, '../../templateFiles/')
   let OUT_TEMPLATE_FILES = join(__dirname, '../src/templateFiles/')
-  console.log(__dirname)
   for (const [key, value] of StandardCommandMappings) {
     it(`Check template file ${value.filename} matches`, function () {
       let TEMPLATE_CONTENT = readFileSync(join(TEMPLATE_DIRECTORY, value.templateFile), 'utf-8')
