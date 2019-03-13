@@ -2,21 +2,22 @@ import * as vscode from 'vscode'
 import { TlFolder, SubFolder } from './enums/folders'
 import { SubFolderMappings, BootstrapFiles } from './mappings/SubFolderMappings'
 import { TemplateFile } from './enums/template'
-import { writePackConfig, writeReadMe } from './functions'
 import { join } from 'path'
 import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
 
-export async function bootstrapFolders (directory?: string) {
-  // const projectRoot = vscode.workspace.workspaceFolders
-  let projectRoot
+export function setBootstrapDirectory (directory?: string) {
   if (!directory || vscode.workspace.workspaceFolders === undefined) {
-    throw new Error('Please open a worksapce or set destinatiopn')
+    throw new Error('Please open a worksapce or set destination')
   } else if (directory) {
-    projectRoot = directory
+    return directory
   } else {
-    projectRoot = vscode.workspace.workspaceFolders[0].uri.fsPath
+    return vscode.workspace.workspaceFolders[0].uri.fsPath
   }
+}
+
+export function bootstrapFolders (directory?: string) {
+  let projectRoot = setBootstrapDirectory(directory)
   for (let key in TlFolder) {
     const value = TlFolder[key]
     const folder = join(projectRoot, value)
@@ -36,7 +37,10 @@ export async function bootstrapFolders (directory?: string) {
       throw new Error(error)
     }
   }
-    // for files within a top level folder
+}
+
+export function writeStandardBootstrapFiles (directory?: string) {
+  const projectRoot = setBootstrapDirectory(directory)
   const TEMPLATE_FOLDER = 'templateFiles'
   for (const [key, value] of BootstrapFiles) {
     const fullPath = join(projectRoot, value.destination, value.filename)
@@ -46,13 +50,16 @@ export async function bootstrapFolders (directory?: string) {
       console.log(e)
     }
   }
-  // Special case for the workflow template as it is in a subfolder
   let fullPath = join(projectRoot, TlFolder.Actions, SubFolder.ActionsWorkflows, 'workflow.yaml')
   try {
     writeFileSync(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, TemplateFile.WorkflowMetadata), 'utf-8'), { flag: 'wx+' })
   } catch (e) {
     console.log(e)
   }
+}
+
+export async function writeCustomBootstrapFiles (directory?: string) {
+  const projectRoot = setBootstrapDirectory(directory)
   let validChars = '^[0-9a-zA-Z-]+$'
   let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
   if (ref === undefined) {

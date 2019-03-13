@@ -1,21 +1,14 @@
-import { writeStandardTemplate, writeReadMe } from '../src/functions'
-import { StandardCommandMappings } from '../src/mappings/CommandMappings'
-import { readFileSync, existsSync, mkdirSync, removeSync, pathExistsSync } from 'fs-extra'
+import { mkdirSync, removeSync, pathExistsSync } from 'fs-extra'
 import { join } from 'path'
 import { TlFolder } from '../src/enums/folders'
-import { TemplateFile } from '../src/enums/template'
 import { bootstrapFolders } from '../src/bootstrap-function'
 import * as assert from 'assert'
-import * as sinon from 'sinon'
-import * as vscode from 'vscode'
 
 describe('Check bootstrap script', function () {
   let testFolder = join(__dirname, 'testing-space')
   before('Create bootstrap test folder', function () {
     mkdirSync(testFolder)
-    bootstrapFolders(testFolder).catch(error => {
-      vscode.window.showErrorMessage(error)
-    })
+    bootstrapFolders(testFolder)
   })
   describe('Check that folder structure is created', function () {
     for (let folder in TlFolder) {
