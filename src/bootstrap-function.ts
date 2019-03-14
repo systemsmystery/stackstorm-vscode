@@ -3,24 +3,37 @@ import { TlFolder, SubFolder } from './enums/folders'
 import { SubFolderMappings, BootstrapFiles } from './mappings/SubFolderMappings'
 import { TemplateFile } from './enums/template'
 import { join } from 'path'
-import { mkdirSync, readFileSync, writeFileSync } from 'fs'
+import { mkdirSync, readFileSync, writeFileSync, readdir } from 'fs'
 import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
 
 export function setBootstrapDirectory (directory?: string) {
-  if (!directory || vscode.workspace.workspaceFolders === undefined) {
-    throw new Error('Please open a worksapce or set destination')
-  } else if (directory) {
+  if (directory) {
     return directory
-  } else {
+  } else if (vscode.workspace.workspaceFolders !== undefined) {
     return vscode.workspace.workspaceFolders[0].uri.fsPath
+  } else {
+    throw new Error('No workspace open or folder specified')
   }
 }
 
-export function bootstrapFolders (directory?: string) {
-  let projectRoot = setBootstrapDirectory(directory)
+export function checkDirectoryContent (directory: string) {
+  readdir(directory, function (err, files) {
+    if (err) {
+      return err
+    } else {
+      if (!files.length) {
+        return true
+      } else {
+        throw new Error('Directory is not empty')
+      }
+    }
+  })
+}
+
+export function createFolderStructure (directory: string) {
   for (let key in TlFolder) {
     const value = TlFolder[key]
-    const folder = join(projectRoot, value)
+    const folder = join(directory, value)
     try {
       mkdirSync(folder)
     } catch (error) {
@@ -30,7 +43,7 @@ export function bootstrapFolders (directory?: string) {
   for (const [key, value] of SubFolderMappings) {
     const tlf = value.topLevelFolder
     const subfol = value.subFolder
-    const fullPath = join(projectRoot, tlf, subfol)
+    const fullPath = join(directory, tlf, subfol)
     try {
       mkdirSync(fullPath)
     } catch (error) {
@@ -39,18 +52,17 @@ export function bootstrapFolders (directory?: string) {
   }
 }
 
-export function writeStandardBootstrapFiles (directory?: string) {
-  const projectRoot = setBootstrapDirectory(directory)
+export function writeStandardBootstrapFiles (directory: string) {
   const TEMPLATE_FOLDER = 'templateFiles'
   for (const [key, value] of BootstrapFiles) {
-    const fullPath = join(projectRoot, value.destination, value.filename)
+    const fullPath = join(directory, value.destination, value.filename)
     try {
       writeFileSync(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, value.templateFile), 'utf-8'), { flag: 'wx+' })
     } catch (e) {
       console.log(e)
     }
   }
-  let fullPath = join(projectRoot, TlFolder.Actions, SubFolder.ActionsWorkflows, 'workflow.yaml')
+  let fullPath = join(directory, TlFolder.Actions, SubFolder.ActionsWorkflows, 'workflow.yaml')
   try {
     writeFileSync(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, TemplateFile.WorkflowMetadata), 'utf-8'), { flag: 'wx+' })
   } catch (e) {
@@ -58,8 +70,7 @@ export function writeStandardBootstrapFiles (directory?: string) {
   }
 }
 
-export async function writeCustomBootstrapFiles (directory?: string) {
-  const projectRoot = setBootstrapDirectory(directory)
+export async function writeCustomBootstrapFiles (directory: string) {
   let validChars = '^[0-9a-zA-Z-]+$'
   let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
   if (ref === undefined) {
@@ -83,10 +94,10 @@ export async function writeCustomBootstrapFiles (directory?: string) {
     'email': email
   }
   let PackFileContent = generateTemplate(TemplateFile.packFile, PackMappings)
-  writeFileContent(join(projectRoot, 'pack.yaml'), PackFileContent, 'pack.yaml', true)
+  writeFileContent(join(directory, 'pack.yaml'), PackFileContent, 'pack.yaml', true)
   const ReadMeMappings = {
     name: packname
   }
   let ReadMeContent = generateTemplate(TemplateFile.ReadMe, ReadMeMappings)
-  writeFileContent(join(projectRoot, 'README.md'), ReadMeContent, 'README.md', true)
+  writeFileContent(join(directory, 'README.md'), ReadMeContent, 'README.md', true)
 }

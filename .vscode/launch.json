@@ -4,7 +4,9 @@
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
 	"version": "0.2.0",
-	"configurations": [{
+	"configurations": [
+
+	{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
@@ -29,7 +31,6 @@
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionTestsPath=${workspaceFolder}/out/test"
 			],
-			"cwd": "testing-space",
 			"outFiles": [
 				"${workspaceFolder}/out/test/**/*.js"
 			],

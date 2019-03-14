@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { StandardCommandMappings } from './mappings/CommandMappings'
 import { writeStandardTemplate, writeReadMe, writePackConfig } from './functions'
-import { bootstrapFolders, writeStandardBootstrapFiles, writeCustomBootstrapFiles } from './bootstrap-function'
+import { createFolderStructure, writeStandardBootstrapFiles, writeCustomBootstrapFiles, setBootstrapDirectory, checkDirectoryContent } from './bootstrap-function'
 import { Command } from './enums/command'
 import { TemplateFile } from './enums/template'
 
@@ -29,11 +29,20 @@ export function activate (context: vscode.ExtensionContext) {
   context.subscriptions.push(writePackConfigCommand)
 
   const bootstrapFolder = vscode.commands.registerCommand(Command.BootstrapFolder, () => {
-    bootstrapFolders()
-    writeStandardBootstrapFiles()
-    writeCustomBootstrapFiles().catch(error => {
+    let projectRoot
+    try {
+      projectRoot = setBootstrapDirectory()
+      checkDirectoryContent(projectRoot)
+      createFolderStructure(projectRoot)
+      writeStandardBootstrapFiles(projectRoot)
+      writeCustomBootstrapFiles(projectRoot).catch(error => {
+        vscode.window.showErrorMessage(error)
+      })
+    } catch (error) {
+      console.log(error)
       vscode.window.showErrorMessage(error)
-    })
+    }
+
   })
   context.subscriptions.push(bootstrapFolder)
 }

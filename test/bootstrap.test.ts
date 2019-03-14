@@ -3,16 +3,55 @@ import { readFile, accessSync, access } from 'fs'
 import { join } from 'path'
 import { TlFolder } from '../src/enums/folders'
 import { BootstrapFiles } from '../src/mappings/SubFolderMappings'
-import { bootstrapFolders, writeStandardBootstrapFiles } from '../src/bootstrap-function'
+import { createFolderStructure, writeStandardBootstrapFiles, setBootstrapDirectory } from '../src/bootstrap-function'
 import * as assert from 'assert'
+import * as sinon from 'sinon'
+import * as vscode from 'vscode'
 
 describe('Check bootstrap script', function () {
   let testFolder = join(__dirname, 'testing-space')
   before('Create bootstrap test folder', function (done) {
     mkdirSync(testFolder)
-    bootstrapFolders(testFolder)
+    createFolderStructure(testFolder)
     writeStandardBootstrapFiles(testFolder)
     done()
+  })
+  describe('Check setBootstrapDirectory function', function () {
+    if (vscode.workspace.workspaceFolders !== undefined) {
+      console.log(vscode.workspace.workspaceFolders[0].uri.fsPath)
+    }
+    it('Check that an error occurse when no workspace is open', function () {
+      let rootFolder = sinon.stub(vscode.workspace, 'workspaceFolders').value(undefined)
+      try {
+        setBootstrapDirectory()
+      } catch (err) {
+        assert.strictEqual(err.message, 'No workspace open or folder specified')
+      }
+      rootFolder.restore()
+    })
+    it('Check that the directory is returned if specified', function () {
+      let rootFolder
+      try {
+        rootFolder = setBootstrapDirectory('testing-space')
+        assert.strictEqual(rootFolder, 'testing-space')
+      } catch (error) {
+        console.log(error)
+      }
+    })
+    it('Check that the workspace is returned if no directory is specified', function () {
+      let actualWorkspace
+      let result
+      if (vscode.workspace.workspaceFolders !== undefined) {
+        actualWorkspace = vscode.workspace.workspaceFolders[0].uri.fsPath
+      }
+      try {
+        result = setBootstrapDirectory()
+        assert.strictEqual(result, actualWorkspace)
+      } catch (error) {
+        console.log(error)
+      }
+    })
+
   })
   describe('Check that folder structure is created', function () {
     for (let folder in TlFolder) {
