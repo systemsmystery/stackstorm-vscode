@@ -1,12 +1,13 @@
-import { mkdirSync, removeSync, pathExistsSync, ensureFileSync } from 'fs-extra'
+import { mkdirSync, removeSync, pathExistsSync } from 'fs-extra'
 import { readFile, accessSync, access } from 'fs'
 import { join } from 'path'
 import { TlFolder } from '../src/enums/folders'
 import { BootstrapFiles } from '../src/mappings/SubFolderMappings'
-import { createFolderStructure, writeStandardBootstrapFiles, setBootstrapDirectory } from '../src/bootstrap-function'
+import { createFolderStructure, writeStandardBootstrapFiles, setBootstrapDirectory, checkDirectoryContent } from '../src/bootstrap-function'
 import * as assert from 'assert'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
+import * as emptyDir from 'empty-dir'
 
 describe('Check bootstrap script', function () {
   let testFolder = join(__dirname, 'testing-space')
@@ -50,6 +51,20 @@ describe('Check bootstrap script', function () {
       } catch (error) {
         console.log(error)
       }
+    })
+    it('Check that when directory is empty it returns true', function () {
+      let result
+      let mockEmptyDir = sinon.stub(emptyDir, 'sync').returns(true)
+      result = checkDirectoryContent(__dirname)
+      mockEmptyDir.restore()
+      assert.strictEqual(result, true)
+    })
+    it('Check that when directory is not empty it returns false', function () {
+      let result
+      let mockNonEmptyDir = sinon.stub(emptyDir, 'sync').returns(false)
+      result = checkDirectoryContent(__dirname)
+      mockNonEmptyDir.restore()
+      assert.strictEqual(result, false)
     })
 
   })

@@ -5,6 +5,7 @@ import { TemplateFile } from './enums/template'
 import { join } from 'path'
 import { mkdirSync, readFileSync, writeFileSync, readdir } from 'fs'
 import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
+import * as emptyDir from 'empty-dir'
 
 export function setBootstrapDirectory (directory?: string) {
   if (directory) {
@@ -17,17 +18,12 @@ export function setBootstrapDirectory (directory?: string) {
 }
 
 export function checkDirectoryContent (directory: string) {
-  readdir(directory, function (err, files) {
-    if (err) {
-      return err
-    } else {
-      if (!files.length) {
-        return true
-      } else {
-        throw new Error('Directory is not empty')
-      }
-    }
-  })
+  let dirResult = emptyDir.sync(directory)
+  if (dirResult === true) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export function createFolderStructure (directory: string) {

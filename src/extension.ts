@@ -32,7 +32,10 @@ export function activate (context: vscode.ExtensionContext) {
     let projectRoot
     try {
       projectRoot = setBootstrapDirectory()
-      checkDirectoryContent(projectRoot)
+      if (checkDirectoryContent(projectRoot) === false) {
+        vscode.window.showErrorMessage('Directory not empty')
+        throw new Error('Directory not empty')
+      }
       createFolderStructure(projectRoot)
       writeStandardBootstrapFiles(projectRoot)
       writeCustomBootstrapFiles(projectRoot).catch(error => {
