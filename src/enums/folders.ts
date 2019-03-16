@@ -18,5 +18,6 @@ export enum bootstrapFiles {
     RuleTemplate = 'rule.yaml',
     AliasTemplate = 'alias.yaml',
     SensorTemplate = 'sensor.yaml',
-    PolicyTemplate = 'policy.yaml'
+    PolicyTemplate = 'policy.yaml',
+    WorkflowTemplate = 'workflow.yaml'
 }

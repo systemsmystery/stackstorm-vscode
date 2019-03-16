@@ -52,7 +52,12 @@ export function createFolderStructure (directory: string) {
 export function writeStandardBootstrapFiles (directory: string) {
   const TEMPLATE_FOLDER = 'templateFiles'
   for (const [key, value] of BootstrapFiles) {
-    const fullPath = join(directory, value.destination, value.filename)
+    let fullPath
+    if (value.subfolder === undefined) {
+      fullPath = join(directory, value.destination, value.filename)
+    } else {
+      fullPath = join(directory, value.destination, value.subfolder, value.filename)
+    }
     writeFile(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, value.templateFile)), { encoding: 'utf-8', flag: 'wx+' }, (error) => {
       if (error) {
         throw error
@@ -60,13 +65,6 @@ export function writeStandardBootstrapFiles (directory: string) {
       LogToConsole(`Created file ${value.filename}`)
     })
   }
-  let fullPath = join(directory, TlFolder.Actions, SubFolder.ActionsWorkflows, 'workflow.yaml')
-  writeFile(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, TemplateFile.WorkflowMetadata)), { encoding: 'utf-8', flag: 'wx+' }, (error) => {
-    if (error) {
-      throw error
-    }
-    LogToConsole('Created file workflow.yaml')
-  })
 }
 
 export async function writeCustomBootstrapFiles (directory: string) {

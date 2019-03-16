@@ -14,5 +14,6 @@ export interface ISubFolder {
 export interface IBootstrapFiles {
   templateFile: TemplateFile,
   destination: TlFolder | string,
+  subfolder?: SubFolder,
   filename: bootstrapFiles
 }
