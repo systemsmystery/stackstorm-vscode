@@ -1,5 +1,6 @@
 import { mkdirSync, removeSync, pathExistsSync } from 'fs-extra'
-import { readFile, accessSync, access } from 'fs'
+// import { readFile, accessSync, access, writeFileSync } from 'fs'
+import * as fs from 'fs'
 import { join } from 'path'
 import { TlFolder } from '../src/enums/folders'
 import { BootstrapFiles } from '../src/mappings/SubFolderMappings'
@@ -84,7 +85,7 @@ describe('Check bootstrap script', function () {
         let filePath = join(testFolder, value.destination, value.filename)
         let result: boolean
         try {
-          accessSync(filePath)
+          fs.accessSync(filePath)
           result = true
         } catch (err) {
           result = false
@@ -93,6 +94,12 @@ describe('Check bootstrap script', function () {
         done()
       })
     }
+    it('Check that if a standard file cannot be created that it throws an error', function () {
+      let mockFileWrite = sinon.stub(fs, 'writeFile').yields(new Error('write error'))
+      // let result = writeStandardBootstrapFiles(testFolder)
+      assert.throws(() => writeStandardBootstrapFiles(testFolder), Error, 'write error')
+      mockFileWrite.restore()
+    })
   })
   after('Cleanup test folder', function () {
     removeSync(testFolder)

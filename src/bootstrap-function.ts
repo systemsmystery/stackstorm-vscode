@@ -3,9 +3,10 @@ import { TlFolder, SubFolder } from './enums/folders'
 import { SubFolderMappings, BootstrapFiles } from './mappings/SubFolderMappings'
 import { TemplateFile } from './enums/template'
 import { join } from 'path'
-import { mkdirSync, readFileSync, writeFileSync, readdir } from 'fs'
+import { mkdirSync, readFileSync, writeFileSync, writeFile } from 'fs'
 import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
 import * as emptyDir from 'empty-dir'
+import { LogToConsole } from './logging'
 
 export function setBootstrapDirectory (directory?: string) {
   if (directory) {
@@ -52,18 +53,20 @@ export function writeStandardBootstrapFiles (directory: string) {
   const TEMPLATE_FOLDER = 'templateFiles'
   for (const [key, value] of BootstrapFiles) {
     const fullPath = join(directory, value.destination, value.filename)
-    try {
-      writeFileSync(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, value.templateFile), 'utf-8'), { flag: 'wx+' })
-    } catch (e) {
-      console.log(e)
-    }
+    writeFile(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, value.templateFile)), { encoding: 'utf-8', flag: 'wx+' }, (error) => {
+      if (error) {
+        throw error
+      }
+      LogToConsole(`Created file ${value.filename}`)
+    })
   }
   let fullPath = join(directory, TlFolder.Actions, SubFolder.ActionsWorkflows, 'workflow.yaml')
-  try {
-    writeFileSync(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, TemplateFile.WorkflowMetadata), 'utf-8'), { flag: 'wx+' })
-  } catch (e) {
-    console.log(e)
-  }
+  writeFile(fullPath, readFileSync(join(__dirname, TEMPLATE_FOLDER, TemplateFile.WorkflowMetadata)), { encoding: 'utf-8', flag: 'wx+' }, (error) => {
+    if (error) {
+      throw error
+    }
+    LogToConsole('Created file workflow.yaml')
+  })
 }
 
 export async function writeCustomBootstrapFiles (directory: string) {
