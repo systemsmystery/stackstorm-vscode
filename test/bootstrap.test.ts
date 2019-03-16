@@ -82,7 +82,12 @@ describe('Check bootstrap script', function () {
   describe('Check standard files are created', function () {
     for (const [key, value] of BootstrapFiles) {
       it(`Check ${value.filename} has been created in ${value.destination}`, function (done) {
-        let filePath = join(testFolder, value.destination, value.filename)
+        let filePath
+        if (value.subfolder === undefined) {
+          filePath = join(testFolder, value.destination, value.filename)
+        } else {
+          filePath = join(testFolder, value.destination, value.subfolder, value.filename)
+        }
         let result: boolean
         try {
           fs.accessSync(filePath)
