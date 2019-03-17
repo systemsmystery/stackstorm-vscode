@@ -66,12 +66,12 @@ export function writeStandardBootstrapFiles (directory: string) {
     })
   }
 }
-
-export async function writeCustomBootstrapFiles (directory: string) {
+export async function getPackInfo (): Promise<object> {
   let validChars = '^[0-9a-zA-Z-]+$'
-  let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
+  let ref: string | undefined
+  ref = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
   if (ref === undefined) {
-    vscode.window.showErrorMessage('No string given', 'Got it')
+    vscode.window.showErrorMessage('No pack reference given', 'Got it')
     throw new Error('Undefined ref')
   } else if (!ref.match(validChars)) {
     vscode.window.showErrorMessage('Pack name can only contain letters, numbers and dashes', 'Got it')
@@ -84,17 +84,18 @@ export async function writeCustomBootstrapFiles (directory: string) {
   let author = await getSettingOrInput('Pack Author', 'Pack Author', 'defaultAuthor', 'John Doe')
   let email = await getSettingOrInput('Author Email', 'Author Email', 'defaultEmail', 'john@example.com')
   // Write Pack Config File
-  const PackMappings = {
+  let data = {
     'ref': ref,
-    'name': packname,
+    'packname': packname,
     'author': author,
     'email': email
   }
-  let PackFileContent = generateTemplate(TemplateFile.packFile, PackMappings)
+  return data
+}
+
+export async function writeCustomBootstrapFiles (directory: string, mappings: object) {
+  let PackFileContent = generateTemplate(TemplateFile.packFile, mappings)
   writeFileContent(join(directory, 'pack.yaml'), PackFileContent, 'pack.yaml', true)
-  const ReadMeMappings = {
-    name: packname
-  }
-  let ReadMeContent = generateTemplate(TemplateFile.ReadMe, ReadMeMappings)
+  let ReadMeContent = generateTemplate(TemplateFile.ReadMe, mappings)
   writeFileContent(join(directory, 'README.md'), ReadMeContent, 'README.md', true)
 }

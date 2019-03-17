@@ -32,8 +32,6 @@ export async function getInput (prompt: string, placeholder: string, defaultValu
   let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
   if (value as string) {
     return value
-  } else {
-    return undefined
   }
 }
 

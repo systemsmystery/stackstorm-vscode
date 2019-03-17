@@ -4,11 +4,12 @@ import * as fs from 'fs'
 import { join } from 'path'
 import { TlFolder } from '../src/enums/folders'
 import { BootstrapFiles } from '../src/mappings/SubFolderMappings'
-import { createFolderStructure, writeStandardBootstrapFiles, setBootstrapDirectory, checkDirectoryContent } from '../src/bootstrap-function'
+import { createFolderStructure, writeStandardBootstrapFiles, setBootstrapDirectory, checkDirectoryContent, writeCustomBootstrapFiles } from '../src/bootstrap-function'
 import * as assert from 'assert'
 import * as sinon from 'sinon'
 import * as vscode from 'vscode'
 import * as emptyDir from 'empty-dir'
+import * as handlerFunctions from '../src/handlerFunctions'
 
 describe('Check bootstrap script', function () {
   let testFolder = join(__dirname, 'testing-space')
@@ -105,6 +106,13 @@ describe('Check bootstrap script', function () {
       assert.throws(() => writeStandardBootstrapFiles(testFolder), Error, 'write error')
       mockFileWrite.restore()
     })
+    // it('Check that no string is passed for reference that an error is thrown', function () {
+    //   let mockGetInput = sinon.stub(handlerFunctions, 'getInput').rejects(undefined)
+    //   writeCustomBootstrapFiles(testFolder).catch(error => {
+    //     vscode.window.showErrorMessage(error)
+    //   })
+    //   mockGetInput.restore()
+    // })
   })
   after('Cleanup test folder', function () {
     removeSync(testFolder)
