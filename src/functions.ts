@@ -42,7 +42,7 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
     throw new Error('No pack name supplied')
   } else {
     const mapping = {
-      name: packname
+      packname: packname
     }
     let content = generateTemplate(templateFile, mapping)
     writeFileSync(join(destination, filename), content, { flag: 'wx+' })
