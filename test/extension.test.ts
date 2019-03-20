@@ -58,6 +58,7 @@ describe('Write README file', function () {
       vscode.window.showErrorMessage(error)
       let result = spy.called
       assert.strictEqual(result, true)
+      assert.strictEqual(error.message, 'No pack name supplied')
     })
   })
 })
