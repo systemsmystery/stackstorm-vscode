@@ -12,8 +12,9 @@ describe('Test getInput handler function', function () {
   })
   it('Test that response matches undefined', async function () {
     const inputStub = sinon.stub(vscode.window, 'showInputBox').resolves()
-    let result: string | undefined = await getInput('Test prompt', 'Test placeholder', 'Test default value')
-    assert.strictEqual(result, undefined)
+    await getInput('Test prompt', 'Test placeholder', 'Test default value').catch(error => {
+      assert.strictEqual(error.message, 'No value supplied for prompt Test prompt')
+    })
     inputStub.restore()
   })
 })

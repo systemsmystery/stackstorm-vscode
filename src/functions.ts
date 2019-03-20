@@ -13,15 +13,8 @@ export function writeStandardTemplate (templateFile: TemplateFile, destination: 
   let templatePath = join(__dirname, TEMPLATE_FOLDER, templateFile)
   let content = readFileSync(templatePath, 'utf-8')
   let destinationFile = join(destination, filename)
-  // writeFileContent(destinationFile, content, filename, false)
   writeFileSync(destinationFile, content, { flag: 'wx+' })
-  // (err) => {
-  //   if (err) throw err
-  //   // if (showInfoMessages === true) {
-  //   vscode.window.showInformationMessage(`Created file ${filename}`)
-  //   LogToConsole(`Created file ${filename}`)
-  //   // }
-  // })
+
 }
 
 export async function writeReadMe (templateFile: TemplateFile, destination: string, filename: string) {
@@ -38,7 +31,6 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
     }
   })
   if (packname === undefined) {
-    // vscode.window.showErrorMessage('No pack name supplied')
     throw new Error('No pack name supplied')
   } else {
     const mapping = {
@@ -53,10 +45,7 @@ export async function writePackConfig (templateFile: TemplateFile, destination: 
   LogToConsole('Writing pack config file')
   let validChars = '^[0-9a-zA-Z-]+$'
   let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
-  if (ref === undefined) {
-    vscode.window.showErrorMessage('No string given', 'Got it')
-    throw new Error('Undefined ref')
-  } else if (!ref.match(validChars)) {
+  if (!ref.match(validChars)) {
     vscode.window.showErrorMessage('Pack name can only contain letters, numbers and dashes', 'Got it')
     throw new Error('Pack name can only contain letters, numbers and dashes. Pack will not be created correctly.')
   }

@@ -4,9 +4,10 @@ import { SubFolderMappings, BootstrapFiles } from './mappings/SubFolderMappings'
 import { TemplateFile } from './enums/template'
 import { join } from 'path'
 import { mkdirSync, readFileSync, writeFileSync, writeFile } from 'fs'
-import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
+import { generateTemplate, getInput, getSetting, writeFileContent } from './handlerFunctions'
 import * as emptyDir from 'empty-dir'
 import { LogToConsole } from './logging'
+import { IPackInfo } from './mappings/packinfoMappings'
 
 export function setBootstrapDirectory (directory?: string) {
   if (directory) {
@@ -66,25 +67,37 @@ export function writeStandardBootstrapFiles (directory: string) {
     })
   }
 }
-export async function getPackInfo (): Promise<object> {
+export async function getPackInfo (): Promise<IPackInfo> {
   let validChars = '^[0-9a-zA-Z-]+$'
-  let ref: string | undefined
+  let ref
   ref = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
-  if (ref === undefined) {
-    vscode.window.showErrorMessage('No pack reference given', 'Got it')
-    throw new Error('Undefined ref')
-  } else if (!ref.match(validChars)) {
+  if (!ref.match(validChars)) {
     vscode.window.showErrorMessage('Pack name can only contain letters, numbers and dashes', 'Got it')
-    throw new Error('Pack name can only contain letters, numbers and dashes. Pack will not be created correctly.')
+    return Promise.reject(new Error('Pack name can only contain letters, numbers and dashes. Pack will not be created correctly.'))
   }
   let packname = ref.replace(/-/g, ' ').toLowerCase()
   .split(' ')
   .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
   .join(' ')
-  let author = await getSettingOrInput('Pack Author', 'Pack Author', 'defaultAuthor', 'John Doe')
-  let email = await getSettingOrInput('Author Email', 'Author Email', 'defaultEmail', 'john@example.com')
-  // Write Pack Config File
-  let data = {
+  let author
+  if (getSetting('defaultAuthor')) {
+    author = getSetting('defaultAuthor')
+  } else {
+    author = await getInput('Pack Author', 'Pack Author', 'John Doe')
+  }
+
+  let email
+  if (getSetting('defaultEmail')) {
+    email = getSetting('defaultEmail')
+  } else {
+    email = await getInput('Author Email', 'Author Email', 'john@example.com')
+  }
+
+  if (!author || !email) {
+    throw new Error('Pack author or email not defined')
+  }
+
+  let data: IPackInfo = {
     'ref': ref,
     'packname': packname,
     'author': author,

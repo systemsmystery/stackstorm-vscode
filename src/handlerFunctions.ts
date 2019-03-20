@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { readFileSync, writeFileSync, lstat, truncate, writeFile } from 'fs'
 import { TemplateFile } from './enums/template'
-import { join } from 'path'
+import { join, resolve } from 'path'
 import { LogToConsole } from './logging'
 import * as lodash from 'lodash'
 
@@ -15,24 +15,34 @@ export function writeFileContent (destinationFile: string, fileContent: string, 
   })
 }
 
-export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string) {
+export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string): Promise<string | undefined> {
   let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
-  if (PACK_CONFIG.get(setting, '')) {
-    LogToConsole(`Returning value of ${setting}`)
-    let value = PACK_CONFIG.get<string>(setting)
+  let value = PACK_CONFIG.get<string>(setting)
+  if (value) {
+    console.log(`Not undefinded: ${value}`)
     return value
   } else {
-    LogToConsole(`Cannot find ${setting}`)
-    let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
-    return value
+    value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
   }
+  return value
 }
 
-export async function getInput (prompt: string, placeholder: string, defaultValue: string): Promise<string | undefined> {
-  let value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
-  if (value as string) {
+export function getSetting (setting: string) {
+  let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
+  let value = PACK_CONFIG.get<string>(setting)
+  if (value) {
+    console.log(`Found config value ${value} for setting ${setting}`)
     return value
   }
+  return
+}
+
+export async function getInput (prompt: string, placeholder: string, defaultValue: string): Promise<string> {
+  const value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
+  if (value) {
+    return value
+  }
+  throw new Error(`No value supplied for prompt ${prompt}`)
 }
 
 export function generateTemplate (templateFile: TemplateFile, mappings: object) {
