@@ -2,7 +2,8 @@ import { join } from 'path'
 import { readFileSync, lstatSync, existsSync, writeFile, writeFileSync } from 'fs'
 import * as vscode from 'vscode'
 import { TemplateFile } from './enums/template'
-import { generateTemplate, getInput, getSettingOrInput, writeFileContent } from './handlerFunctions'
+import { generateTemplate, getInput, writeFileContent } from './handlerFunctions'
+import { getPackInfo } from '../src/bootstrap-function'
 import { getOutputChannel, LogToConsole } from './logging'
 
 getOutputChannel().show(true)
@@ -43,33 +44,7 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
 
 export async function writePackConfig (templateFile: TemplateFile, destination: string, filename: string) {
   LogToConsole('Writing pack config file')
-  let validChars = '^[0-9a-zA-Z-]+$'
-  let ref: string | undefined = await getInput('Pack Reference (lowercase and (-) only)', 'pack-reference', 'my-first-pack')
-  if (!ref.match(validChars)) {
-    vscode.window.showErrorMessage('Pack name can only contain letters, numbers and dashes', 'Got it')
-    throw new Error('Pack name can only contain letters, numbers and dashes. Pack will not be created correctly.')
-  }
-  let packname = ref.replace(/-/g, ' ').toLowerCase()
-    .split(' ')
-    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-    .join(' ')
-  let author = await getSettingOrInput('Pack Author', 'Pack Author', 'defaultAuthor', 'John Doe')
-  let email = await getSettingOrInput('Author Email', 'Author Email', 'defaultEmail', 'john@example.com')
-  if (!ref || !packname || !author || !email) {
-    vscode.window.showErrorMessage('Please fill in all information required', 'Got it')
-    LogToConsole('Not all information provided. Got the following:')
-    LogToConsole(`ref: ${ref}`)
-    LogToConsole(`packname: ${packname}`)
-    LogToConsole(`author: ${author}`)
-    LogToConsole(`email: ${email}`)
-    throw new Error('Not all information provided')
-  }
-  const mappings = {
-    'ref': ref,
-    'name': packname,
-    'author': author,
-    'email': email
-  }
+  const mappings = await getPackInfo()
   let content = generateTemplate(TemplateFile.packFile, mappings)
   writeFileContent(join(destination, filename), content, filename, false)
 

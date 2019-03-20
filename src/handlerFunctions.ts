@@ -15,18 +15,6 @@ export function writeFileContent (destinationFile: string, fileContent: string, 
   })
 }
 
-export async function getSettingOrInput (prompt: string, placeholder: string, setting: string, defaultValue: string): Promise<string | undefined> {
-  let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
-  let value = PACK_CONFIG.get<string>(setting)
-  if (value) {
-    console.log(`Not undefinded: ${value}`)
-    return value
-  } else {
-    value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
-  }
-  return value
-}
-
 export function getSetting (setting: string) {
   let PACK_CONFIG = vscode.workspace.getConfiguration('st2')
   let value = PACK_CONFIG.get<string>(setting)
