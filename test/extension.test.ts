@@ -61,6 +61,13 @@ describe('Write README file', function () {
       assert.strictEqual(error.message, 'No pack name supplied')
     })
   })
+  it('If packname is undefined throw error', function () {
+    const mockInput = sinon.stub(vscode.window, 'showInputBox').resolves(undefined)
+    writeReadMe(TemplateFile.ReadMe, SCRATCH_DIR, 'README.md').catch(error => {
+      assert.strictEqual(error.message, 'No pack name supplied')
+    })
+    mockInput.restore()
+  })
 })
 
 after('Remove file', function () {
