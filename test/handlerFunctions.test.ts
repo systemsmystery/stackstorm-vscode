@@ -1,7 +1,8 @@
 import * as assert from 'assert'
 import * as vscode from 'vscode'
 import * as sinon from 'sinon'
-import { getInput } from '../src/handlerFunctions'
+import { getInput, writeFileContent, getSetting } from '../src/handlerFunctions'
+import * as fs from 'fs'
 
 describe('Test getInput handler function', function () {
   it('Test that response matches value', async function () {
@@ -16,5 +17,10 @@ describe('Test getInput handler function', function () {
       assert.strictEqual(error.message, 'No value supplied for prompt Test prompt')
     })
     inputStub.restore()
+  })
+  it('Check that writeFileContent throws error', function () {
+    let stubWriteFile = sinon.stub(fs, 'writeFile').yields(new Error('write error'))
+    assert.throws(function () { writeFileContent('test-file.txt', 'test-content', 'test-file.txt', false) }, Error)
+    stubWriteFile.restore()
   })
 })
