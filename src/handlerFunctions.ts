@@ -6,7 +6,7 @@ import { LogToConsole } from './logging'
 import * as lodash from 'lodash'
 
 export function writeFileContent (destinationFile: string, fileContent: string, fileName: string, showInfoMessages: boolean) {
-  writeFile(destinationFile, fileContent, { flag: 'wx+' }, (err) => {
+  writeFile(destinationFile, fileContent, { encoding: 'utf-8', flag: 'wx+' }, (err) => {
     if (err) throw err
     if (showInfoMessages === true) {
       vscode.window.showInformationMessage(`Created file ${fileName}`)
