@@ -1,0 +1,10 @@
+---
+ref: pack-ref
+name: Pack Ref
+description: 
+keywords:
+    - example
+    - test
+version: 0.1.0
+author: Test Author
+email: example@example.com
