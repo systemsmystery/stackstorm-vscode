@@ -103,7 +103,7 @@ export async function getPackInfo (): Promise<IPackInfo> {
     'author': author,
     'email': email
   }
-  return data
+  return Promise.resolve(data)
 }
 
 export async function writeCustomBootstrapFiles (directory: string, mappings: object) {
@@ -111,4 +111,5 @@ export async function writeCustomBootstrapFiles (directory: string, mappings: ob
   writeFileContent(join(directory, 'pack.yaml'), PackFileContent, 'pack.yaml', true)
   let ReadMeContent = generateTemplate(TemplateFile.ReadMe, mappings)
   writeFileContent(join(directory, 'README.md'), ReadMeContent, 'README.md', true)
+  return Promise.resolve()
 }

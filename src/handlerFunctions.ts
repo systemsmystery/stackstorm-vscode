@@ -28,7 +28,7 @@ export function getSetting (setting: string) {
 export async function getInput (prompt: string, placeholder: string, defaultValue: string): Promise<string> {
   const value = await vscode.window.showInputBox({ prompt: prompt, placeHolder: placeholder, value: defaultValue })
   if (value) {
-    return value
+    return Promise.resolve(value)
   }
   throw new Error(`No value supplied for prompt ${prompt}`)
 }

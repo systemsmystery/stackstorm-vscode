@@ -40,12 +40,18 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
     let content = generateTemplate(templateFile, mapping)
     writeFileSync(join(destination, filename), content, { flag: 'wx+' })
   }
+  return Promise.resolve()
 }
 
 export async function writePackConfig (templateFile: TemplateFile, destination: string, filename: string) {
   LogToConsole('Writing pack config file')
   const mappings = await getPackInfo()
   let content = generateTemplate(TemplateFile.packFile, mappings)
-  writeFileContent(join(destination, filename), content, filename, false)
-
+  // writeFileContent(join(destination, filename), content, filename, false)
+  await writeFile(join(destination, filename), content, { encoding: 'utf8', flag: 'wx+' }, (error) => {
+    if (error) {
+      throw error
+    }
+    return Promise.resolve()
+  })
 }
