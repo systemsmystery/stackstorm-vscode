@@ -193,6 +193,16 @@ describe('Test VSCode Stackstorm Extension', function () {
           assert.strictEqual(README_RESULT, README_SAMPLE)
           assert.strictEqual(PACK_RESULT, PACK_SAMPLE)
         })
+        it('Check that when creating top level folder an error is thrown if there is an issue', function () {
+          let mockstub = sinon.stub(fs, 'mkdirSync').throws('There was an error')
+          assert.throws(function () { createFolderStructure(testFolder) }, Error)
+          mockstub.restore()
+        })
+        it('Check that when creating sub level folder an error is thrown if there is an issue', function () {
+          let mockstub = sinon.stub(fs, 'mkdirSync').onCall(5).throws('There was an error at sub')
+          assert.throws(function () { createFolderStructure(testFolder) }, Error)
+          mockstub.restore()
+        })
       })
 
     })

@@ -1,7 +1,7 @@
 import * as assert from 'assert'
 import * as vscode from 'vscode'
 import * as sinon from 'sinon'
-import { getInput, writeFileContent, getSetting } from '../src/handlerFunctions'
+import { getInput, writeFileContent } from '../src/handlerFunctions'
 import * as fs from 'fs'
 
 describe('Test getInput handler function', function () {
