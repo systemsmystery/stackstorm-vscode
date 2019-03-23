@@ -26,14 +26,14 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
   LogToConsole(join(destination, filename))
   LogToConsole('Creating ReadMe file')
   let packname = await vscode.window.showInputBox({ prompt: 'Enter Pack Name (This will be the header of the README)',
-    placeHolder: 'Stackstorm Integration Pack',
-    validateInput: (result: string) => {
-      if (!result) {
-        return 'Valid pack name required'
-      }
-      return null
-    }
-  })
+    placeHolder: 'Stackstorm Integration Pack' })
+  //   validateInput: (result: string) => {
+  //     if (!result) {
+  //       return 'Valid pack name required'
+  //     }
+  //     return null
+  //   }
+  // })
   if (packname === undefined) {
     throw new Error('No pack name supplied')
   } else {

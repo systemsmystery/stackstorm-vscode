@@ -1,8 +1,9 @@
-import { writePackConfig } from '../src/functions'
+import { writePackConfig, writeReadMe } from '../src/functions'
 import { mkdirSync, removeSync, existsSync } from 'fs-extra'
 import { join } from 'path'
 import * as assert from 'assert'
 import * as sinon from 'sinon'
+import * as vscode from 'vscode'
 import * as bootstrapfunctions from '../src/bootstrap-function'
 import { TemplateFile } from '../src/enums/template'
 
