@@ -1,10 +1,13 @@
 import { join } from 'path'
-import { readFileSync, lstatSync, existsSync, writeFile, writeFileSync } from 'fs'
+import * as fs from 'fs'
 import * as vscode from 'vscode'
 import { TemplateFile } from './enums/template'
 import { generateTemplate, getInput, writeFileContent } from './handlerFunctions'
 import { getPackInfo } from '../src/bootstrap-function'
 import { getOutputChannel, LogToConsole } from './logging'
+import * as util from 'util'
+
+const writeFile = util.promisify(fs.writeFile)
 
 getOutputChannel().show(true)
 
@@ -12,9 +15,9 @@ export function writeStandardTemplate (templateFile: TemplateFile, destination: 
   LogToConsole(`Creating ${filename} file`)
   const TEMPLATE_FOLDER = 'templateFiles'
   let templatePath = join(__dirname, TEMPLATE_FOLDER, templateFile)
-  let content = readFileSync(templatePath, 'utf-8')
+  let content = fs.readFileSync(templatePath, 'utf-8')
   let destinationFile = join(destination, filename)
-  writeFileSync(destinationFile, content, { flag: 'wx+' })
+  fs.writeFileSync(destinationFile, content, { flag: 'wx+' })
 
 }
 
@@ -38,7 +41,7 @@ export async function writeReadMe (templateFile: TemplateFile, destination: stri
       packname: packname
     }
     let content = generateTemplate(templateFile, mapping)
-    writeFileSync(join(destination, filename), content, { flag: 'wx+' })
+    fs.writeFileSync(join(destination, filename), content, { flag: 'wx+' })
   }
   return Promise.resolve()
 }
@@ -48,10 +51,5 @@ export async function writePackConfig (templateFile: TemplateFile, destination: 
   const mappings = await getPackInfo()
   let content = generateTemplate(TemplateFile.packFile, mappings)
   // writeFileContent(join(destination, filename), content, filename, false)
-  await writeFile(join(destination, filename), content, { encoding: 'utf8', flag: 'wx+' }, (error) => {
-    if (error) {
-      throw error
-    }
-    return Promise.resolve()
-  })
+  await writeFile(join(destination, filename), content, { encoding: 'utf8', flag: 'wx+' })
 }

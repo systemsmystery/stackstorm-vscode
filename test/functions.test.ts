@@ -32,8 +32,6 @@ describe('Testing writePackConfig function', function () {
     return Promise.resolve()
   })
   it('Check that file is written when writePackConfig is run', function () {
-    let result = existsSync(join(testFolder, 'write-pack-config-pack.yaml'))
-    console.log(result)
-    assert.strictEqual(result, true)
+    assert.strictEqual(existsSync(join(testFolder, 'write-pack-config-pack.yaml')), true)
   })
 })

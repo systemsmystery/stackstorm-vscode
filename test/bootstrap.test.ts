@@ -44,6 +44,7 @@ describe('Test VSCode Stackstorm Extension', function () {
         } catch (error) {
           console.log(error)
         }
+        return Promise.resolve()
       })
       it('Check that when directory is empty it returns true', function (done) {
         let result
@@ -74,6 +75,7 @@ describe('Test VSCode Stackstorm Extension', function () {
         mkdirSync(testFolder)
         createFolderStructure(testFolder)
         writeStandardBootstrapFiles(testFolder)
+        return Promise.resolve()
       })
       after('Cleanup test folder', function (done) {
         removeSync(testFolder)
@@ -157,6 +159,7 @@ describe('Test VSCode Stackstorm Extension', function () {
         assert.strictEqual(res['author'], 'Test Author')
         assert.strictEqual(res['email'], 'example@example.com')
         mockGetInput.restore()
+        return Promise.resolve()
       })
       describe('Check that custom files write correctly', function () {
         let testFolder = join(__dirname, 'test-custom-files')
@@ -167,6 +170,7 @@ describe('Test VSCode Stackstorm Extension', function () {
             console.log('Folder does not exist')
           }
           mkdirSync(testFolder)
+          return Promise.resolve()
         })
         before('Create files', function (done) {
           console.log(testFolder)

@@ -17,6 +17,7 @@ describe('Test getInput handler function', function () {
       assert.strictEqual(error.message, 'No value supplied for prompt Test prompt')
     })
     inputStub.restore()
+    return Promise.resolve()
   })
   it('Check that writeFileContent throws error', function () {
     let stubWriteFile = sinon.stub(fs, 'writeFile').yields(new Error('write error'))
