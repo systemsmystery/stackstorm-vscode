@@ -1,163 +1,167 @@
 {
-	"name": "stackstorm-vscode",
-	"displayName": "Stackstorm VSCode",
-	"description": "VScode extension for stackstorm pack creation",
-	"publisher": "systemsmystery",
-	"author": {
-		"name": "Richard Annand"
-	},
-	"version": "1.3.0",
-	"engines": {
-		"vscode": "^1.31.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/systemsmystery/stackstorm-vscode"
-	},
-	"bugs": {
-		"url": "https://github.com/systemsmystery/stackstorm-vscode/issues"
-	},
-	"keywords": [
-		"Stackstorm",
-		"ST2",
-		"templates"
-	],
-	"categories": [
-		"Other"
-	],
-	"license": "SEE LICENSE IN LICENSE",
-	"icon": "images/logo.jpg",
-	"activationEvents": [
-		"*"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"configuration": {
-			"type": "object",
-			"title": "Stackstorm Pack Configuration",
-			"properties": {
-				"st2.defaultAuthor": {
-					"type": "string",
-					"default": null,
-					"description": "Default pack author to use in pack configuration file."
-				},
-				"st2.defaultEmail": {
-					"type": "string",
-					"default": null,
-					"description": "Default pack email to use in pack configuration file."
-				}
-			}
-		},
-		"commands": [
-			{
-				"command": "st2.gen_packFile",
-				"title": "ST2: Generate Pack Config File"
-			},
-			{
-				"command": "st2.gen_configSchema",
-				"title": "ST2: Generate Config Schema"
-			},
-			{
-				"command": "st2.gen_readMe",
-				"title": "ST2: Generate Pack README"
-			},
-			{
-				"command": "st2.gen_actionMetadata",
-				"title": "ST2: Generate Action Metadata File"
-			},
-			{
-				"command": "st2.gen_workflowMetadata",
-				"title": "ST2: Generate Workflow Metadata File"
-			},
-			{
-				"command": "st2.gen_ruleConfig",
-				"title": "ST2: Generate Rule Config File"
-			},
-			{
-				"command": "st2.gen_aliasMetadata",
-				"title": "ST2: Generate Action Alias Metadata File"
-			},
-			{
-				"command": "st2.gen_sensorMetadata",
-				"title": "ST2: Generate Sensor Metadata File"
-			},
-			{
-				"command": "st2.gen_policyMetadata",
-				"title": "ST2: Generate Policy Metadata File"
-			},
-			{
-				"command": "st2.bootstrap_folder",
-				"title": "ST2: Bootstrap Folder"
-			}
-		],
-		"menus": {
-			"explorer/context": [
-				{
-					"command": "st2.gen_packFile",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_configSchema",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_readMe",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_actionMetadata",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_workflowMetadata",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_ruleConfig",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_aliasMetadata",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_sensorMetadata",
-					"group": "st2@1"
-				},
-				{
-					"command": "st2.gen_policyMetadata",
-					"group": "st2@1"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"moveTemplate": "copyfiles templateFiles/**/*.tmpl ./out/",
-		"vscode:prepublish": "npm run moveTemplate && npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && vscode-linter && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"@types/chai": "^4.1.7",
-		"@types/mocha": "^2.2.48",
-		"@types/node": "^10.12.21",
-		"chai": "^4.2.0",
-		"copyfiles": "^2.1.0",
-		"mocha": "^6.0.2",
-		"ts-node": "^8.0.2",
-		"tslint": "^5.12.1",
-		"tslint-config-standard": "^8.0.1",
-		"typescript": "^3.3.3333",
-		"vsce": "^1.57.1",
-		"vscode": "^1.1.28",
-		"vscode-linter": "^0.2.2"
-	},
-	"dependencies": {
-		"@types/classnames": "^2.2.7",
-		"@types/lodash": "^4.14.121",
-		"classnames": "^2.2.6",
-		"lodash": "^4.17.11"
-	}
+  "name": "stackstorm-vscode",
+  "displayName": "Stackstorm VSCode",
+  "description": "VScode extension for stackstorm pack creation",
+  "publisher": "systemsmystery",
+  "author": {
+    "name": "Richard Annand"
+  },
+  "version": "1.3.0",
+  "engines": {
+    "vscode": "^1.31.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/systemsmystery/stackstorm-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/systemsmystery/stackstorm-vscode/issues"
+  },
+  "keywords": [
+    "Stackstorm",
+    "ST2",
+    "templates"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "icon": "images/logo.jpg",
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Stackstorm Pack Configuration",
+      "properties": {
+        "st2.defaultAuthor": {
+          "type": "string",
+          "default": null,
+          "description": "Default pack author to use in pack configuration file."
+        },
+        "st2.defaultEmail": {
+          "type": "string",
+          "default": null,
+          "description": "Default pack email to use in pack configuration file."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "st2.gen_packFile",
+        "title": "ST2: Generate Pack Config File"
+      },
+      {
+        "command": "st2.gen_configSchema",
+        "title": "ST2: Generate Config Schema"
+      },
+      {
+        "command": "st2.gen_readMe",
+        "title": "ST2: Generate Pack README"
+      },
+      {
+        "command": "st2.gen_actionMetadata",
+        "title": "ST2: Generate Action Metadata File"
+      },
+      {
+        "command": "st2.gen_workflowMetadata",
+        "title": "ST2: Generate Workflow Metadata File"
+      },
+      {
+        "command": "st2.gen_ruleConfig",
+        "title": "ST2: Generate Rule Config File"
+      },
+      {
+        "command": "st2.gen_aliasMetadata",
+        "title": "ST2: Generate Action Alias Metadata File"
+      },
+      {
+        "command": "st2.gen_sensorMetadata",
+        "title": "ST2: Generate Sensor Metadata File"
+      },
+      {
+        "command": "st2.gen_policyMetadata",
+        "title": "ST2: Generate Policy Metadata File"
+      },
+      {
+        "command": "st2.bootstrap_folder",
+        "title": "ST2: Bootstrap Folder"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "st2.gen_packFile",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_configSchema",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_readMe",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_actionMetadata",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_workflowMetadata",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_ruleConfig",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_aliasMetadata",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_sensorMetadata",
+          "group": "st2@1"
+        },
+        {
+          "command": "st2.gen_policyMetadata",
+          "group": "st2@1"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "moveTemplate": "copyfiles templateFiles/**/*.tmpl ./out/",
+    "vscode:prepublish": "npm run moveTemplate && npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && vscode-linter && node ./node_modules/vscode/bin/test",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^2.2.48",
+    "@types/node": "^10.12.21",
+    "chai": "^4.2.0",
+    "copyfiles": "^2.1.0",
+    "mocha": "^6.0.2",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.3.3333",
+    "vsce": "^1.57.1",
+    "vscode": "^1.1.28",
+    "vscode-linter": "^0.2.2"
+  },
+  "dependencies": {
+    "@types/classnames": "^2.2.7",
+    "@types/lodash": "^4.14.121",
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.11",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
