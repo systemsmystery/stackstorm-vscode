@@ -144,14 +144,14 @@
 		"@types/mocha": "^2.2.48",
 		"@types/node": "^10.12.21",
 		"chai": "^4.2.0",
-		"copyfiles": "^2.1.0",
+		"copyfiles": "^2.1.1",
 		"mocha": "^6.0.2",
 		"ts-node": "^8.0.2",
 		"tslint": "^5.12.1",
 		"tslint-config-standard": "^8.0.1",
 		"typescript": "^3.3.3333",
-		"vsce": "^1.57.1",
-		"vscode": "^1.1.28",
+		"vsce": "^1.75.0",
+		"vscode": "^1.1.35",
 		"vscode-linter": "^0.2.2"
 	},
 	"dependencies": {
