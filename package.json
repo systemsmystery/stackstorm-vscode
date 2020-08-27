@@ -158,6 +158,6 @@
 		"@types/classnames": "^2.2.7",
 		"@types/lodash": "^4.14.121",
 		"classnames": "^2.2.6",
-		"lodash": "^4.17.11"
+		"lodash": "^4.17.17"
 	}
 }
